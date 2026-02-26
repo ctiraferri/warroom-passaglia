@@ -724,7 +724,6 @@
 const CONFIG = {
   apiUrl: 'https://warroom-b24.catconsultores.com.ar',
   projectId:   1397403186,
-  defaultDays: 90,
 };
 
 // ══════════════════════════════════════════
@@ -750,8 +749,8 @@ async function loadData() {
   overlay.style.display = 'flex';
   errBox.style.display  = 'none';
 
-  const today   = new Date().toISOString().slice(0, 10);
-  const pastDate = new Date(Date.now() - CONFIG.defaultDays * 86400000).toISOString().slice(0, 10);
+  const today    = new Date().toISOString().slice(0, 10);
+  const pastDate = '2026-01-01';
   const url = `${CONFIG.apiUrl}/api/v1/data?project_id=${CONFIG.projectId}&from_date=${pastDate}&to_date=${today}`;
 
   try {
