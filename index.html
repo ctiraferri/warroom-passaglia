@@ -438,17 +438,17 @@
   <!-- HEADER -->
   <header>
     <div class="header-left">
-      <div class="header-logo">WAR ROOM</div>
+      <div class="header-logo">WAR ROOM DIGITAL</div>
       <div class="header-divider"></div>
       <div class="header-subject">
-        <div class="label">// SUJETO MONITOREADO</div>
+        <div class="label">// CLIENTE</div>
         <div class="name">SANTIAGO PASSAGLIA</div>
         <div class="sub">Intendente · San Nicolás · Prov. Buenos Aires</div>
       </div>
     </div>
     <div class="header-right">
-      <div class="page-label">PÁG. 01 / EJECUTIVO</div>
-      <div class="live-badge"><div class="live-dot"></div>LIVE · POSTGRESQL</div>
+      <div class="page-label">PÁG. 01 / OVERVIEW</div>
+      <div class="live-badge"><div class="live-dot"></div>LIVE · BBDD ACTIVA</div>
     </div>
   </header>
 
@@ -485,7 +485,7 @@
           <div class="ics-bar-indicator" id="icsIndicator" style="left:0%"></div>
         </div>
         <div class="ics-scale">
-          <span>0 ESTABLE</span><span>25</span><span>50 RIESGO</span><span>75</span><span>100 CRISIS</span>
+          <span>0 ESTABLE</span><span>25</span><span>50 RIESGO</span><span>75</span><span>100 POSIBLE CRISIS</span>
         </div>
       </div>
     </div>
@@ -656,8 +656,8 @@
   </div>
 
   <footer>
-    <span>// WAR ROOM · INTELIGENCIA NARRATIVA Y RIESGO POLÍTICO</span>
-    <span>FUENTE: BRAND24 + INGESTA AUTOMATIZADA · POSTGRES</span>
+    <span>// WAR ROOM DIGITAL · INTELIGENCIA NARRATIVA, OPORTUNIDADES Y RIESGO POLÍTICO</span>
+    <span>FUENTE: BRAND24 + INGESTA AUTOMATIZADA + GOOGLE TRENDS · IA ESTRATEGICA</span>
     <span id="timestamp"></span>
   </footer>
 </div>
@@ -995,9 +995,9 @@ function calcICS(d) {
   const score = Math.round(volNorm*0.3 + polarScore*0.3 + negScore*0.4);
   const clamped = Math.max(0, Math.min(100, score));
   let status = 'ESTABLE';
-  if (clamped >= 75) status = 'CRISIS';
+  if (clamped >= 75) status = 'POSIBLE CRISIS';
   else if (clamped >= 50) status = 'RIESGO';
-  else if (clamped >= 25) status = 'TENSIÓN';
+  else if (clamped >= 25) status = 'MONITOREAR';
   return {score: clamped, status};
 }
 
@@ -1072,7 +1072,7 @@ function updatePlatformBars(d) {
   d.forEach(m => cats[m.category] = (cats[m.category]||0)+1);
   const sorted = Object.entries(cats).sort((a,b)=>b[1]-a[1]);
   const max = sorted[0]?.[1]||1;
-  const colors = {'News':'var(--accent)','X (Twitter)':'#1d9bf0','Facebook':'#1877f2','TikTok':'#ff0050','Web':'var(--neutral)','Blogs':'var(--text-faint)'};
+  const colors = {'Noticias':'var(--accent)','X (Twitter)':'#1d9bf0','Facebook':'#1877f2','TikTok':'#ff0050','Web':'var(--neutral)','Blogs':'var(--text-faint)'};
   const container = document.getElementById('platformBars');
   container.innerHTML = sorted.map(([cat,cnt]) => `
     <div class="plat-bar">
@@ -1246,12 +1246,12 @@ const CALCS = {
   ics: {
     title: 'ÍNDICE CLIMA SOCIAL (ICS)',
     formula: 'ICS = Vol(30%) + Polar(30%) + Neg(40%)',
-    body: 'Combina: volumen normalizado sobre histórico, índice de polarización (|%Pos − %Neg|), y peso de menciones negativas. Escala 0–100. Estable <25 · Tensión 25-50 · Riesgo 50-75 · Crisis >75'
+    body: 'Combina: volumen normalizado sobre histórico, índice de polarización (|%Pos − %Neg|), y peso de menciones negativas. Escala 0–100. Estable <25 · Monitorear 25-50 · Riesgo 50-75 · Posible Crisis >75'
   },
   total: {
     title: 'MENCIONES TOTALES',
     formula: 'COUNT(*) WHERE date BETWEEN :from AND :to',
-    body: 'Conteo directo de registros en la vista consolidada para el período seleccionado. Incluye todas las fuentes: News, Social, Web.'
+    body: 'Conteo directo de registros en la vista consolidada para el período seleccionado. Incluye todas las fuentes: Noticias, Social, Web.'
   },
   neutral: {
     title: 'MENCIONES NEUTRAS',
