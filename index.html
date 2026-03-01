@@ -141,7 +141,7 @@
   .filter-count span { color:var(--accent); }
 
   /* ICS ROW */
-  .ics-row { display:grid; grid-template-columns:300px 1fr; gap:16px; margin-bottom:16px; }
+  .ics-row { display:grid; grid-template-columns:300px 360px 1fr; gap:16px; margin-bottom:16px; }
   .ics-panel {
     background:var(--bg-panel); border:1px solid var(--border);
     padding:20px; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -172,10 +172,10 @@
   .sem-tension.active { opacity:1; box-shadow:0 0 10px var(--yellow); }
 
   /* KPI CARDS */
-  .kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .kpi-row { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
   .kpi-card {
     background:var(--bg-panel); border:1px solid var(--border);
-    padding:16px 18px; position:relative; overflow:hidden;
+    padding:12px 14px; position:relative; overflow:hidden;
     transition:border-color 0.2s; cursor:pointer;
   }
   .kpi-card:hover { border-color:var(--accent); }
@@ -184,13 +184,13 @@
   .kpi-card.pos::after    { background:var(--green); }
   .kpi-card.neg::after    { background:var(--red); }
   .kpi-card.neutral::after{ background:var(--neutral); }
-  .kpi-label { font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--text-dim); margin-bottom:8px; }
-  .kpi-value { font-family:var(--font-display); font-size:52px; line-height:1; letter-spacing:2px; transition:all 0.4s; }
+  .kpi-label { font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--text-dim); margin-bottom:4px; }
+  .kpi-value { font-family:var(--font-display); font-size:36px; line-height:1; letter-spacing:2px; transition:all 0.4s; }
   .kpi-card.total .kpi-value  { color:var(--accent); text-shadow:0 0 20px var(--accent-glow); }
   .kpi-card.pos .kpi-value    { color:var(--green); }
   .kpi-card.neg .kpi-value    { color:var(--red); }
   .kpi-card.neutral .kpi-value{ color:var(--neutral); }
-  .kpi-sub  { font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:4px; }
+  .kpi-sub  { font-family:var(--font-mono); font-size:11px; color:var(--text-dim); margin-top:2px; }
   .kpi-trend { position:absolute; top:14px; right:14px; font-family:var(--font-mono); font-size:11px; }
   .trend-up   { color:var(--green); }
   .trend-down { color:var(--red); }
@@ -228,13 +228,13 @@
   }
   .expand-btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
 
-  .chart-container { position:relative; height:180px; }
+  .chart-container { position:relative; height:260px; }
 
   /* DONUT */
   .donut-wrap { display:flex; align-items:center; gap:20px; }
-  .donut-container { position:relative; width:160px; height:160px; flex-shrink:0; }
+  .donut-container { position:relative; width:200px; height:200px; flex-shrink:0; }
   .donut-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
-  .donut-center-val { font-family:var(--font-display); font-size:32px; color:var(--yellow); line-height:1; transition:all 0.4s; }
+  .donut-center-val { font-family:var(--font-display); font-size:38px; color:var(--yellow); line-height:1; transition:all 0.4s; }
   .donut-center-label { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); letter-spacing:1px; }
   .donut-legend { flex:1; }
   .legend-item { display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid var(--border-dim); }
@@ -437,7 +437,7 @@
     .main-grid > .panel:nth-child(3) { grid-column: 1 / -1; }
     .bottom-grid { grid-template-columns: 1fr 1fr; }
     .bottom-grid > .panel:nth-child(3) { grid-column: 1 / -1; }
-    .ics-row { grid-template-columns: 260px 1fr; }
+    .ics-row { grid-template-columns: 260px 1fr 1fr; }
     .accel-grid { grid-template-columns: repeat(4, 1fr); }
   }
   @media (max-width: 768px) {
@@ -450,7 +450,7 @@
     .ics-row { grid-template-columns: 1fr; }
     .kpi-row { grid-template-columns: repeat(2, 1fr); }
     .drawer { width: 100vw; max-width: 100vw; }
-    .chart-container { height: 140px; }
+    .chart-container { height: 160px; }
     .modal-chart-wrap { height: 260px; }
     .accel-grid { grid-template-columns: 1fr 1fr; }
     .header-logo { font-size: 20px; letter-spacing: 2px; }
@@ -470,6 +470,34 @@
     .page-selector { font-size:9px; padding:4px 8px; letter-spacing:1px; }
     .header-subject .sub { display: none; }
     .header-right { flex-direction: column-reverse; align-items: flex-end; gap: 6px; }
+    /* ── Header overflow fix ─────────────────────── */
+    header { padding: 10px 12px; }
+    .header-left { flex: 1; min-width: 0; gap: 8px; }
+    .header-right { flex-shrink: 0; }
+    .header-divider { display: none; }
+    .header-logo { letter-spacing: 0; }
+    .header-subject { min-width: 0; overflow: hidden; }
+    .header-subject .name {
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    /* ── Wrapper más ajustado en mobile ─────────── */
+    .wrapper { padding: 8px 10px 20px; }
+    /* ── Filter inputs más compactos ─────────────── */
+    .filter-input { font-size: 11px; padding: 5px 6px; }
+    /* ── Page 2 layout fixes ─────────────────────── */
+    #page2 .row-1,
+    #page2 .row-3 { grid-template-columns: 1fr; }
+    #page2 .ica-layout { grid-template-columns: 1fr; }
+    #page2 .ica-number { font-size: 56px; }
+    #page2 .ind02-layout { grid-template-columns: 1fr; }
+    #page2 .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    #page2 .stats-row { grid-template-columns: repeat(2, 1fr); }
+    #page2 .panel-title { letter-spacing: 1px; }
+    #page2 .inf-bar-track { width: 60px; }
+    #page2 .page-title { font-size: 20px; letter-spacing: 2px; }
   }
 
   /* ── PAGE 2: LISTENING ─────────────────────────────────────────── */
@@ -731,7 +759,40 @@
     #page2 .ica-layout { grid-template-columns:1fr; }
     #page2 .stats-row { grid-template-columns:repeat(2,1fr); }
     #page2 .cards-row { grid-template-columns:1fr; }
+    #page2 .ind02-layout { grid-template-columns:1fr; }
+    #page2 .cards-grid { grid-template-columns:repeat(2,1fr); }
+    /* Fix min-width:auto cascade on nested grids */
+    #page2 .listening-grid > *,
+    #page2 .row-1 > *,
+    #page2 .row-3 > * { min-width: 0; }
+    #page2 .panel { overflow: hidden; }
+    /* Contain inf-others-label */
+    #page2 .inf-others-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* Sort buttons wrap at narrow widths */
+    #page2 .rank-sort { flex-wrap: wrap; gap: 4px; }
+    #page2 .panel-title { letter-spacing: 1px; }
+    #page2 .ica-number { font-size: 56px; }
+    #page2 .inf-bar-track { width: 60px; }
+    #page2 .page-title { font-size: 20px; letter-spacing: 2px; }
   }
+  /* ── Narrativa Dominante ────────────────────────────── */
+  .narrativa-section { display:flex; flex-direction:column; gap:0; height:100%; }
+  .narrativa-week { flex:1; padding:8px 0; border-bottom:1px solid var(--border-dim); overflow:hidden; position:relative; }
+  .narrativa-week:last-child { border-bottom:none; }
+  .narrativa-week-hdr { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px; }
+  .narrativa-week-label { font-family:var(--font-mono); font-size:8px; color:var(--text-dim); letter-spacing:2px; }
+  .narrativa-week-dates { font-family:var(--font-mono); font-size:7px; color:var(--accent); }
+  .narrativa-cloud { line-height:1.6; }
+  .nterm { display:inline-block; margin:1px 3px; font-family:var(--font-mono); cursor:pointer; transition:opacity 0.2s; }
+  .nterm:hover { opacity:0.7; }
+  .narrativa-more { font-family:var(--font-mono); font-size:8px; color:var(--accent); cursor:pointer; margin-top:4px; display:block; }
+  /* Modal Narrativa */
+  #narrativaModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; }
+  #narrativaModal.open { display:flex; }
+  .narrativa-modal-box { background:var(--bg-panel); border:1px solid var(--border); padding:24px; max-width:600px; width:90%; max-height:80vh; overflow-y:auto; }
+  .narrativa-modal-title { font-family:var(--font-mono); font-size:11px; color:var(--accent); letter-spacing:3px; margin-bottom:16px; }
+  .narrativa-modal-week { margin-bottom:20px; }
+  .narrativa-modal-close { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); cursor:pointer; float:right; }
 </style>
 </head>
 <body>
@@ -832,6 +893,11 @@
         <div class="kpi-sub" id="kpiPosPct">—</div>
       </div>
     </div>
+    <div class="panel nuevo-indicador-panel" style="display:flex;align-items:center;justify-content:center;">
+      <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--border);text-align:center;">
+        // NUEVO INDICADOR
+      </div>
+    </div>
   </div>
 
   <!-- MAIN GRID -->
@@ -927,10 +993,21 @@
   <!-- BOTTOM GRID -->
   <div class="bottom-grid">
 
-    <!-- DOMINIOS -->
-    <div class="panel">
-      <div class="panel-title">RANKING DE DOMINIOS</div>
-      <div id="domainsList"></div>
+    <!-- NARRATIVA DOMINANTE -->
+    <div class="panel" id="narrativaPanel">
+      <div class="panel-title">NARRATIVA DOMINANTE</div>
+      <div class="narrativa-section" id="narrativaBody">
+        <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);">Cargando...</div>
+      </div>
+    </div>
+
+    <!-- Modal Narrativa -->
+    <div id="narrativaModal">
+      <div class="narrativa-modal-box">
+        <span class="narrativa-modal-close" onclick="closeNarrativaModal()">[ CERRAR ]</span>
+        <div class="narrativa-modal-title">NARRATIVA DOMINANTE — DETALLE</div>
+        <div id="narrativaModalBody"></div>
+      </div>
     </div>
 
     <!-- FEED -->
@@ -939,32 +1016,26 @@
       <div id="mentionFeed"></div>
     </div>
 
-    <!-- NARRATIVA + ALERTAS -->
+    <!-- ALERTAS + DOMINIOS + MIX -->
     <div class="panel">
-      <div class="panel-title">NARRATIVA DOMINANTE</div>
-      <div style="margin-bottom:14px">
-        <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:2px;margin-bottom:8px">TOP TÉRMINOS — CLICK PARA FILTRAR</div>
-        <div id="keywords"></div>
-        <div style="margin-top:8px">
-          <button class="filter-btn reset" style="font-size:9px;padding:4px 10px" onclick="clearKwFilter()">LIMPIAR FILTRO</button>
-        </div>
+      <div class="panel-title">ALERTAS ACTIVAS</div>
+      <div class="alert-item" style="background:var(--red-dim);border:1px solid rgba(255,59,92,0.3)">
+        <div class="alert-label" style="color:var(--red)">⚠ DOMINIO CRÍTICO</div>
+        <div class="alert-text" id="alertDominio">Calculando dominio con mayor concentración negativa...</div>
       </div>
-      <div style="border-top:1px solid var(--border-dim);padding-top:14px;margin-bottom:14px">
-        <div class="panel-title" style="margin-bottom:10px">ALERTAS ACTIVAS</div>
-        <div class="alert-item" style="background:var(--red-dim);border:1px solid rgba(255,59,92,0.3)">
-          <div class="alert-label" style="color:var(--red)">⚠ DOMINIO CRÍTICO</div>
-          <div class="alert-text" id="alertDominio">Calculando dominio con mayor concentración negativa...</div>
-        </div>
-        <div class="alert-item" style="background:var(--yellow-dim);border:1px solid rgba(255,214,0,0.3)">
-          <div class="alert-label" style="color:var(--yellow)">↑ PICO DETECTADO</div>
-          <div class="alert-text" id="alertPico">Calculando pico de menciones...</div>
-        </div>
-        <div class="alert-item" style="background:var(--accent-dim);border:1px solid rgba(0,212,255,0.2)">
-          <div class="alert-label" style="color:var(--accent)">◉ OBSERVACIÓN</div>
-          <div class="alert-text" id="alertObservacion">Cargando análisis...</div>
-        </div>
+      <div class="alert-item" style="background:var(--yellow-dim);border:1px solid rgba(255,214,0,0.3)">
+        <div class="alert-label" style="color:var(--yellow)">↑ PICO DETECTADO</div>
+        <div class="alert-text" id="alertPico">Calculando pico de menciones...</div>
       </div>
-      <div style="border-top:1px solid var(--border-dim);padding-top:14px">
+      <div class="alert-item" style="background:var(--accent-dim);border:1px solid rgba(0,212,255,0.2)">
+        <div class="alert-label" style="color:var(--accent)">◉ OBSERVACIÓN</div>
+        <div class="alert-text" id="alertObservacion">Cargando análisis...</div>
+      </div>
+      <div style="border-top:1px solid var(--border-dim);padding-top:14px;margin-top:14px">
+        <div class="panel-title" style="margin-bottom:10px">RANKING DE DOMINIOS</div>
+        <div id="domainsList"></div>
+      </div>
+      <div style="border-top:1px solid var(--border-dim);padding-top:14px;margin-top:14px">
         <div class="panel-title" style="margin-bottom:10px">MIX PLATAFORMAS (COMPLETO)</div>
         <div id="miniPlatBars"></div>
       </div>
@@ -1369,6 +1440,7 @@ async function loadData() {
     overlay.style.display = 'none';
     renderKeywords();
     updateAll();
+    loadNarrativa();
 
   } catch (err) {
     console.error('loadData error:', err);
@@ -1919,6 +1991,7 @@ document.querySelectorAll('.info-badge').forEach(badge => {
 // ══════════════════════════════════════════
 function renderKeywords() {
   const el = document.getElementById('keywords');
+  if (!el) return; // guard — elemento removido del DOM
   if (KEYWORDS_DEF.length === 0) {
     el.innerHTML = '<span style="font-family:var(--font-mono);font-size:10px;color:var(--text-faint)">Sin datos de términos</span>';
     return;
@@ -2508,6 +2581,87 @@ function lpRenderModal() {
     </tr>`;
   }).join('');
 }
+
+// ── Narrativa Dominante ────────────────────────────────────────
+let NARRATIVA_DATA = null;
+
+async function loadNarrativa() {
+  try {
+    const url = `${CONFIG.apiUrl}/api/v1/narrative?project_id=${CONFIG.projectId}`;
+    const resp = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
+      mode: 'cors',
+    });
+    if (!resp.ok) return;
+    NARRATIVA_DATA = await resp.json();
+    renderNarrativa();
+  } catch(e) {
+    console.warn('Narrativa no disponible:', e);
+  }
+}
+
+function narrativaColor(pos, neg, neu) {
+  const total = pos + neg + neu || 1;
+  if (neg / total > 0.40) return '#ff3b5c';
+  if (pos / total > 0.40) return '#00ff88';
+  if (neg / total > 0.20) return '#8ba3b8';
+  return '#00d4ff';
+}
+
+function buildCloud(terms, maxShow) {
+  if (!terms.length) return '<span style="color:var(--text-dim);font-size:9px">Sin datos</span>';
+  const maxCount = terms[0].count;
+  const visible = terms.slice(0, maxShow);
+  return visible.map(t => {
+    const size  = 9 + Math.round((t.count / maxCount) * 7); // 9-16px
+    const color = narrativaColor(t.pos, t.neg, t.neu);
+    return `<span class="nterm" style="font-size:${size}px;color:${color}" title="${t.count} menciones">${t.term}</span>`;
+  }).join('');
+}
+
+function renderNarrativa() {
+  const body = document.getElementById('narrativaBody');
+  if (!NARRATIVA_DATA || !NARRATIVA_DATA.weeks) {
+    body.innerHTML = '<div style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim)">Sin datos NLP</div>';
+    return;
+  }
+  body.innerHTML = NARRATIVA_DATA.weeks.map((w, i) => `
+    <div class="narrativa-week">
+      <div class="narrativa-week-hdr">
+        <span class="narrativa-week-label">${w.label.toUpperCase()}</span>
+        <span class="narrativa-week-dates">${w.from} / ${w.to}</span>
+      </div>
+      <div class="narrativa-cloud">${buildCloud(w.terms, 10)}</div>
+      ${w.terms.length > 10 ? `<span class="narrativa-more" onclick="openNarrativaModal(${i})">+ ver todos (${w.terms.length})</span>` : ''}
+    </div>
+  `).join('');
+}
+
+function openNarrativaModal(weekIdx) {
+  const modal     = document.getElementById('narrativaModal');
+  const modalBody = document.getElementById('narrativaModalBody');
+  modalBody.innerHTML = NARRATIVA_DATA.weeks.map((w, i) => {
+    const active = i === weekIdx ? 'border-left:2px solid var(--accent);padding-left:10px;' : '';
+    return `
+      <div class="narrativa-modal-week" style="${active}">
+        <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);margin-bottom:8px">
+          ${w.label.toUpperCase()} &nbsp; <span style="color:var(--accent)">${w.from} → ${w.to}</span>
+        </div>
+        <div>${buildCloud(w.terms, 40)}</div>
+      </div>`;
+  }).join('');
+  modal.classList.add('open');
+}
+
+function closeNarrativaModal() {
+  document.getElementById('narrativaModal').classList.remove('open');
+}
+document.getElementById('narrativaModal').addEventListener('click', function(e) {
+  if (e.target === this) closeNarrativaModal();
+});
 </script>
 </body>
 </html>
