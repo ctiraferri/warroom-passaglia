@@ -59,7 +59,7 @@
     display:flex; align-items:center; justify-content:space-between;
     padding:14px 20px; background:var(--bg-panel);
     border:1px solid var(--border); border-top:2px solid var(--accent);
-    margin-bottom:16px; position:relative; overflow:hidden;
+    margin-bottom:16px; position:relative;
   }
   header::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(to bottom,var(--accent),transparent); }
   .header-left { display:flex; align-items:center; gap:18px; }
@@ -72,7 +72,36 @@
   .live-badge { display:flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:11px; color:var(--green); letter-spacing:1px; }
   .live-dot { width:7px; height:7px; border-radius:50%; background:var(--green); animation:blink 1.4s ease-in-out infinite; box-shadow:0 0 8px var(--green); }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .page-label { font-family:var(--font-mono); font-size:10px; color:var(--accent); letter-spacing:3px; padding:5px 10px; border:1px solid rgba(0,212,255,0.3); background:var(--accent-dim); }
+  /* PAGE NAV DROPDOWN */
+  .page-nav { position:relative; }
+  .page-selector {
+    font-family:var(--font-mono); font-size:10px; letter-spacing:2px;
+    padding:5px 12px; border:1px solid rgba(0,212,255,0.3);
+    background:var(--accent-dim); color:var(--accent);
+    cursor:pointer; display:flex; align-items:center; gap:8px;
+    transition: all 0.2s;
+  }
+  .page-selector:hover { border-color:var(--accent-glow); }
+  .page-chevron { font-size:9px; transition:transform 0.2s; }
+  .page-nav.open .page-chevron { transform:rotate(180deg); }
+  .page-menu {
+    display:none; position:absolute; top:calc(100% + 4px); right:0;
+    background:var(--bg-panel); border:1px solid var(--border);
+    min-width:190px; z-index:200;
+  }
+  .page-nav.open .page-menu { display:block; }
+  .page-menu-item {
+    display:block; width:100%; text-align:left;
+    font-family:var(--font-mono); font-size:10px; letter-spacing:2px;
+    padding:8px 14px; border:none; background:transparent; color:var(--text-dim);
+    cursor:pointer; transition: all 0.15s;
+  }
+  .page-menu-item:hover { background:var(--bg-hover); color:var(--accent); }
+  .page-menu-item.active { color:var(--accent); background:var(--accent-dim); }
+
+  /* PAGE SECTIONS */
+  .page-section { display:none; }
+  .page-section.active { display:contents; }
 
   /* DATE FILTER BAR */
   .filter-bar {
@@ -99,6 +128,8 @@
   .filter-btn:hover { background:rgba(0,212,255,0.2); }
   .filter-btn.reset { background:transparent; border-color:var(--border); color:var(--text-dim); }
   .filter-btn.reset:hover { border-color:var(--red); color:var(--red); }
+  .filter-btn.preset { background:transparent; border-color:var(--border); color:var(--text-dim); }
+  .filter-btn.preset:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
   .filter-count { margin-left:auto; font-family:var(--font-mono); font-size:11px; color:var(--text-dim); }
   .filter-count span { color:var(--accent); }
 
@@ -404,6 +435,7 @@
   }
   @media (max-width: 768px) {
     .wrapper { padding: 10px 12px 20px; }
+    .filter-bar { flex-wrap: wrap; gap: 8px; }
     .main-grid { grid-template-columns: 1fr; }
     .main-grid > .panel:nth-child(3) { grid-column: auto; }
     .bottom-grid { grid-template-columns: 1fr; }
@@ -427,8 +459,10 @@
     .ics-number { font-size: 50px; }
     .filter-bar { flex-wrap: wrap; gap: 8px; }
     .filter-count { width: 100%; margin-left: 0; margin-top: 4px; }
-    .page-label { display: none; }
+    .filter-btn { font-size:10px; padding:5px 10px; letter-spacing:1px; }
+    .page-selector { font-size:9px; padding:4px 8px; letter-spacing:1px; }
     .header-subject .sub { display: none; }
+    .header-right { flex-direction: column-reverse; align-items: flex-end; gap: 6px; }
   }
 </style>
 </head>
@@ -447,7 +481,16 @@
       </div>
     </div>
     <div class="header-right">
-      <div class="page-label">PÁG. 01 / OVERVIEW</div>
+      <div class="page-nav" id="pageNav">
+        <button class="page-selector" onclick="togglePageMenu()">
+          <span id="pageSelectorLabel">PÁG. 01 / OVERVIEW</span>
+          <span class="page-chevron">▾</span>
+        </button>
+        <div class="page-menu" id="pageMenu">
+          <button class="page-menu-item active" onclick="switchPage(1)">PÁG. 01 / OVERVIEW</button>
+          <button class="page-menu-item" onclick="switchPage(2)">PÁG. 02 / LISTENING</button>
+        </div>
+      </div>
       <div class="live-badge"><div class="live-dot"></div>LIVE · BBDD ACTIVA</div>
     </div>
   </header>
@@ -460,8 +503,13 @@
     <input type="date" class="filter-input" id="dateTo" min="2026-01-01">
     <button class="filter-btn" onclick="applyFilter()">APLICAR</button>
     <button class="filter-btn reset" onclick="resetFilter()">RESET</button>
+    <button class="filter-btn preset" onclick="filterCurrentMonth()">MES ACTUAL</button>
+    <button class="filter-btn preset" onclick="filterPrevMonth()">MES ANT.</button>
     <div class="filter-count">Mostrando <span id="filteredCount">0</span> menciones</div>
   </div>
+
+  <!-- PÁGINA 1: OVERVIEW -->
+  <div id="page1" class="page-section active">
 
   <!-- ICS ROW -->
   <div class="ics-row">
@@ -655,6 +703,15 @@
     </div>
   </div>
 
+  </div><!-- /page1 -->
+
+  <!-- PÁGINA 2: LISTENING (placeholder) -->
+  <div id="page2" class="page-section">
+    <div style="padding:40px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim); text-align:center;">
+      // PÁG. 02 — LISTENING — EN CONSTRUCCIÓN
+    </div>
+  </div>
+
   <footer>
     <span>// WAR ROOM DIGITAL · INTELIGENCIA NARRATIVA, OPORTUNIDADES Y RIESGO POLÍTICO</span>
     <span>FUENTE: BRAND24 + INGESTA AUTOMATIZADA + GOOGLE TRENDS · IA ESTRATEGICA</span>
@@ -743,6 +800,24 @@ let tlChart = null, donutChart = null, modalChart = null;
 // ══════════════════════════════════════════
 // LOAD DATA FROM API
 // ══════════════════════════════════════════
+function switchPage(n) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('page' + n).classList.add('active');
+  const items = document.querySelectorAll('.page-menu-item');
+  items.forEach((t, i) => t.classList.toggle('active', i === n - 1));
+  document.getElementById('pageSelectorLabel').textContent = items[n - 1].textContent;
+  document.getElementById('pageNav').classList.remove('open');
+  document.querySelector('.filter-count').style.display = n === 1 ? '' : 'none';
+}
+function togglePageMenu() {
+  document.getElementById('pageNav').classList.toggle('open');
+}
+// Cierra el dropdown al hacer click fuera
+document.addEventListener('click', function(e) {
+  const nav = document.getElementById('pageNav');
+  if (nav && !nav.contains(e.target)) nav.classList.remove('open');
+});
+
 async function loadData() {
   const overlay = document.getElementById('loadingOverlay');
   const errBox  = document.getElementById('loadingError');
@@ -812,6 +887,24 @@ function resetFilter() {
   document.getElementById('feedFilter').textContent = '';
   filteredData = ALL_MENTIONS.filter(m => m.date >= _localFrom && m.date <= _localToday);
   updateAll();
+}
+function filterCurrentMonth() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  document.getElementById('dateFrom').value = `${y}-${m}-01`;
+  document.getElementById('dateTo').value   = `${y}-${m}-${d}`;
+  applyFilter();
+}
+function filterPrevMonth() {
+  const last = new Date(new Date().getFullYear(), new Date().getMonth(), 0);
+  const y = last.getFullYear();
+  const m = String(last.getMonth() + 1).padStart(2, '0');
+  const d = String(last.getDate()).padStart(2, '0');
+  document.getElementById('dateFrom').value = `${y}-${m}-01`;
+  document.getElementById('dateTo').value   = `${y}-${m}-${d}`;
+  applyFilter();
 }
 function clearKwFilter() {
   activeKw = null;
