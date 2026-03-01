@@ -455,9 +455,9 @@
   <!-- DATE FILTER BAR -->
   <div class="filter-bar">
     <div class="filter-label">// FILTRO PERÍODO</div>
-    <input type="date" class="filter-input" id="dateFrom">
+    <input type="date" class="filter-input" id="dateFrom" min="2026-01-01">
     <div class="filter-sep">→</div>
-    <input type="date" class="filter-input" id="dateTo">
+    <input type="date" class="filter-input" id="dateTo" min="2026-01-01">
     <button class="filter-btn" onclick="applyFilter()">APLICAR</button>
     <button class="filter-btn reset" onclick="resetFilter()">RESET</button>
     <div class="filter-count">Mostrando <span id="filteredCount">0</span> menciones</div>
@@ -772,13 +772,15 @@ async function loadData() {
     }));
     DATA_LOADED = true;
 
-    // Update date inputs with actual data range
-    if (data.date_range) {
-      document.getElementById('dateFrom').value = data.date_range.from;
-      document.getElementById('dateTo').value   = data.date_range.to;
-    }
+    // Default: últimos 7 días usando fecha LOCAL (evita desfase UTC en Argentina)
+    const _localToday = (d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`)(new Date());
+    const _localFrom  = (d => { d.setDate(d.getDate()-7); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; })(new Date());
+    document.getElementById('dateFrom').value = _localFrom;
+    document.getElementById('dateTo').value   = _localToday;
+    document.getElementById('dateFrom').max   = _localToday;
+    document.getElementById('dateTo').max     = _localToday;
 
-    filteredData = [...ALL_MENTIONS];
+    filteredData = ALL_MENTIONS.filter(m => m.date >= _localFrom && m.date <= _localToday);
     overlay.style.display = 'none';
     renderKeywords();
     updateAll();
@@ -801,15 +803,14 @@ function applyFilter() {
   updateAll();
 }
 function resetFilter() {
-  if (ALL_MENTIONS.length > 0) {
-    const dates = ALL_MENTIONS.map(m => m.date).sort();
-    document.getElementById('dateFrom').value = dates[0];
-    document.getElementById('dateTo').value   = dates[dates.length - 1];
-  }
+  const _localToday = (d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`)(new Date());
+  const _localFrom  = (d => { d.setDate(d.getDate()-7); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; })(new Date());
+  document.getElementById('dateFrom').value = _localFrom;
+  document.getElementById('dateTo').value   = _localToday;
   activeKw = null;
   document.querySelectorAll('.kw-tag').forEach(t => t.classList.remove('active'));
   document.getElementById('feedFilter').textContent = '';
-  filteredData = [...ALL_MENTIONS];
+  filteredData = ALL_MENTIONS.filter(m => m.date >= _localFrom && m.date <= _localToday);
   updateAll();
 }
 function clearKwFilter() {
@@ -916,22 +917,25 @@ function updateAll() {
   document.getElementById('accelAvg').textContent = avgDay;
   document.getElementById('accelSources').textContent = domains || '—';
 
-  // Aceleración (última semana vs semana anterior)
-  if (dates.length > 0) {
-    const lastDate = dates[dates.length - 1];
-    const refTs    = new Date(lastDate).getTime();
-    const w1from   = new Date(refTs - 7*86400000).toISOString().slice(0,10);
-    const w2from   = new Date(refTs - 14*86400000).toISOString().slice(0,10);
-    const recent   = d.filter(m => m.date > w1from && m.date <= lastDate).length;
-    const prev     = d.filter(m => m.date > w2from && m.date <= w1from).length;
-    if (prev > 0) {
-      const delta = Math.round((recent - prev) / prev * 100);
-      document.getElementById('accelRate').textContent = (delta >= 0 ? '+' : '') + delta + '%';
+  // Aceleración — inmune al filtro de fechas, siempre calcula sobre ALL_MENTIONS
+  {
+    const _allDates = [...new Set(ALL_MENTIONS.map(m=>m.date))].sort();
+    if (_allDates.length > 0) {
+      const _last  = _allDates[_allDates.length - 1];
+      const _refTs = new Date(_last).getTime();
+      const _w1from = new Date(_refTs - 7*86400000).toISOString().slice(0,10);
+      const _w2from = new Date(_refTs - 14*86400000).toISOString().slice(0,10);
+      const _recent = ALL_MENTIONS.filter(m => m.date > _w1from && m.date <= _last).length;
+      const _prev   = ALL_MENTIONS.filter(m => m.date > _w2from && m.date <= _w1from).length;
+      if (_prev > 0) {
+        const delta = Math.round((_recent - _prev) / _prev * 100);
+        document.getElementById('accelRate').textContent = (delta >= 0 ? '+' : '') + delta + '%';
+      } else {
+        document.getElementById('accelRate').textContent = _recent > 0 ? '+∞%' : '—';
+      }
     } else {
-      document.getElementById('accelRate').textContent = recent > 0 ? '+∞%' : '—';
+      document.getElementById('accelRate').textContent = '—';
     }
-  } else {
-    document.getElementById('accelRate').textContent = '—';
   }
 
   // Alerts (dynamic)
