@@ -30,6 +30,13 @@
     --font-display: 'Bebas Neue', sans-serif;
     --font-ui:      'Rajdhani', sans-serif;
     --font-mono:    'JetBrains Mono', monospace;
+    --orange:     #ff8c00;
+    --purple:     #b060ff;
+    --purple-dim: rgba(176,96,255,0.10);
+    --purple-brd: rgba(176,96,255,0.25);
+    --accent-brd: rgba(0,212,255,0.25);
+    --yellow-brd: rgba(255,214,0,0.3);
+    --red-brd:    rgba(255,59,92,0.35);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -464,6 +471,267 @@
     .header-subject .sub { display: none; }
     .header-right { flex-direction: column-reverse; align-items: flex-end; gap: 6px; }
   }
+
+  /* ── PAGE 2: LISTENING ─────────────────────────────────────────── */
+  #page2 .page-header { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--border-dim); }
+  #page2 .page-header-left { display:flex; align-items:center; gap:12px; }
+  #page2 .page-tag { font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--accent); padding:3px 10px; border:1px solid var(--accent-brd); background:var(--accent-dim); }
+  #page2 .page-title { font-family:var(--font-display); font-size:28px; color:var(--text-main); letter-spacing:4px; }
+  #page2 .page-subtitle { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text-dim); }
+  #page2 .page-period { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text-faint); text-align:right; }
+  #page2 .listening-grid { position:relative; z-index:1; display:grid; grid-template-columns:1fr; gap:16px; }
+  #page2 .row-1 { display:grid; grid-template-columns:3fr 2fr; gap:16px; }
+  #page2 .row-3 { display:grid; grid-template-columns:3fr 2fr; gap:16px; }
+  #page2 .panel { background:var(--bg-panel); border:1px solid var(--border); padding:16px 18px; }
+  #page2 .panel-header { display:flex; align-items:center; gap:8px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border-dim); }
+  #page2 .panel-title { font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text-dim); flex:1; }
+  #page2 .panel-header[data-color="yellow"]::before { content:''; width:3px; height:10px; flex-shrink:0; background:var(--yellow); box-shadow:0 0 6px var(--yellow); }
+  #page2 .panel-header[data-color="purple"]::before { content:''; width:3px; height:10px; flex-shrink:0; background:var(--purple); }
+  #page2 .panel-header[data-color="green"]::before  { content:''; width:3px; height:10px; flex-shrink:0; background:var(--green); box-shadow:0 0 6px var(--green); }
+  #page2 .panel-header[data-color="red"]::before    { content:''; width:3px; height:10px; flex-shrink:0; background:var(--red); }
+  #page2 .panel-header[data-color="accent"]::before { content:''; width:3px; height:10px; flex-shrink:0; background:var(--purple); }
+  /* Help btn */
+  #page2 .help-btn { width:18px; height:18px; border-radius:50%; background:var(--bg-card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:9px; color:var(--text-dim); cursor:default; flex-shrink:0; position:relative; transition:all 0.15s; }
+  #page2 .help-btn.y:hover { border-color:var(--yellow); color:var(--yellow); background:var(--yellow-dim); }
+  #page2 .help-btn.p:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-dim); }
+  #page2 .help-btn.g:hover { border-color:var(--green);  color:var(--green);  background:var(--green-dim); }
+  #page2 .help-btn.r:hover { border-color:var(--red);    color:var(--red);    background:var(--red-dim); }
+  #page2 .help-btn.a:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-dim); }
+  #page2 .help-tooltip { visibility:hidden; opacity:0; position:absolute; top:calc(100% + 6px); right:0; width:260px; background:var(--bg-card); border:1px solid var(--border-dim); padding:10px 12px; z-index:600; box-shadow:0 6px 20px rgba(0,0,0,0.9); transition:opacity 0.15s,visibility 0.15s; pointer-events:none; }
+  #page2 .help-btn:hover .help-tooltip { visibility:visible; opacity:1; }
+  #page2 .help-tt-title { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; margin-bottom:6px; padding-bottom:5px; border-bottom:1px solid var(--border-dim); }
+  #page2 .help-btn.y .help-tt-title { color:var(--yellow); border-top:2px solid var(--yellow); }
+  #page2 .help-btn.p .help-tt-title { color:var(--purple); border-top:2px solid var(--purple); }
+  #page2 .help-btn.g .help-tt-title { color:var(--green);  border-top:2px solid var(--green); }
+  #page2 .help-btn.r .help-tt-title { color:var(--red);    border-top:2px solid var(--red); }
+  #page2 .help-btn.a .help-tt-title { color:var(--purple); border-top:2px solid var(--purple); }
+  #page2 .help-tooltip p { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); line-height:1.6; margin-bottom:4px; }
+  #page2 .help-formula { background:var(--bg-deep); border:1px solid var(--border-dim); padding:4px 7px; margin:5px 0; font-family:var(--font-mono); font-size:8px; color:var(--accent); }
+  #page2 .help-zones { display:flex; flex-direction:column; gap:3px; margin-top:5px; }
+  #page2 .help-zone { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:8px; color:var(--text-dim); }
+  #page2 .hz-dot { width:7px; height:7px; border-radius:1px; flex-shrink:0; }
+  /* Insight */
+  #page2 .insight-bar { padding:8px 12px; background:var(--bg-card); border:1px solid var(--border-dim); font-family:var(--font-mono); font-size:10px; color:var(--text-dim); line-height:1.6; margin-top:14px; }
+  #page2 .hl   { color:var(--green); }
+  #page2 .hl-y { color:var(--yellow); }
+  #page2 .hl-r { color:var(--red); }
+  #page2 .hl-a { color:var(--accent); }
+  #page2 .hl-p { color:var(--purple); }
+  /* Section label */
+  #page2 .section-label { font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--text-faint); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+  #page2 .section-label::after { content:''; flex:1; height:1px; background:var(--border-dim); }
+  /* Sort btn */
+  #page2 .sort-btn { font-family:var(--font-mono); font-size:8px; letter-spacing:1px; padding:2px 7px; border:1px solid var(--border); color:var(--text-faint); background:transparent; cursor:pointer; transition:all 0.15s; }
+  #page2 .sort-btn.active, #page2 .sort-btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
+  /* IND.01 ICA */
+  #page2 .ica-layout { display:grid; grid-template-columns:200px 1fr; gap:20px; }
+  #page2 .ica-gauge { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; padding:8px 0; }
+  #page2 .ica-sublabel { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); letter-spacing:2px; }
+  #page2 .ica-number { font-family:var(--font-display); font-size:72px; line-height:1; color:var(--yellow); text-shadow:0 0 30px rgba(255,214,0,0.5); letter-spacing:4px; transition:all 0.5s; }
+  #page2 .ica-pct { font-size:32px; color:var(--text-dim); }
+  #page2 .ica-status { font-family:var(--font-mono); font-size:10px; padding:3px 10px; border:1px solid; letter-spacing:2px; margin-top:4px; }
+  #page2 .status-alta  { border-color:var(--red);    color:var(--red);    background:var(--red-dim); }
+  #page2 .status-media { border-color:var(--yellow);  color:var(--yellow); background:var(--yellow-dim); }
+  #page2 .status-baja  { border-color:var(--green);   color:var(--green);  background:var(--green-dim); }
+  #page2 .ica-scale-wrap { width:100%; margin-top:12px; }
+  #page2 .ica-scale-track { height:8px; position:relative; overflow:visible; background:linear-gradient(90deg,var(--green) 0%,var(--yellow) 45%,var(--orange) 70%,var(--red) 100%); opacity:0.6; }
+  #page2 .ica-scale-pin { position:absolute; top:-5px; width:2px; height:18px; background:#fff; transform:translateX(-50%); box-shadow:0 0 8px #fff; transition:left 0.5s; }
+  #page2 .ica-scale-labels { display:flex; justify-content:space-between; margin-top:6px; }
+  #page2 .ica-scale-labels span { font-family:var(--font-mono); font-size:8px; color:var(--text-faint); }
+  #page2 .rank-header { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); letter-spacing:2px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
+  #page2 .rank-sort { display:flex; gap:6px; }
+  #page2 .inf-list { display:flex; flex-direction:column; gap:8px; }
+  #page2 .inf-item { display:flex; align-items:center; gap:10px; padding:6px 8px; transition:background 0.15s; cursor:pointer; }
+  #page2 .inf-item:hover { background:var(--bg-hover); }
+  #page2 .inf-rank { font-family:var(--font-mono); font-size:11px; color:var(--text-faint); width:18px; text-align:center; flex-shrink:0; }
+  #page2 .inf-icon { width:26px; height:26px; border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold; flex-shrink:0; color:#fff; }
+  #page2 .inf-info { flex:1; min-width:0; }
+  #page2 .inf-name { font-size:13px; color:var(--text-main); font-family:var(--font-mono); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #page2 .inf-sub  { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); margin-top:1px; }
+  #page2 .inf-bar-track { width:100px; height:5px; background:var(--border); flex-shrink:0; }
+  #page2 .inf-bar-fill  { height:100%; transition:width 0.5s; }
+  #page2 .inf-val { font-family:var(--font-mono); font-size:12px; width:54px; text-align:right; flex-shrink:0; }
+  #page2 .inf-others { display:flex; align-items:center; gap:10px; padding:6px 8px; cursor:pointer; border:1px dashed var(--border-dim); transition:all 0.15s; margin-top:4px; }
+  #page2 .inf-others:hover { border-color:var(--accent); background:var(--accent-dim); }
+  #page2 .inf-others:hover .inf-others-label { color:var(--accent); }
+  #page2 .inf-others-icon { width:26px; height:26px; background:var(--bg-card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; color:var(--text-faint); }
+  #page2 .inf-others-label { flex:1; font-family:var(--font-mono); font-size:10px; color:var(--text-dim); letter-spacing:1px; transition:color 0.15s; }
+  #page2 .inf-others-cta { font-family:var(--font-mono); font-size:9px; color:var(--accent); opacity:0.7; letter-spacing:1px; }
+  #page2 .inf-others:hover .inf-others-cta { opacity:1; }
+  /* IND.02 */
+  #page2 .ind02-layout { display:grid; grid-template-columns:180px 1fr; gap:20px; align-items:center; }
+  #page2 .donut-wrap { position:relative; width:180px; height:180px; flex-shrink:0; margin:0 auto; }
+  #page2 .donut-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none; }
+  #page2 .donut-center-val { font-family:var(--font-display); font-size:34px; line-height:1; color:var(--accent); letter-spacing:2px; }
+  #page2 .donut-center-label { font-family:var(--font-mono); font-size:8px; letter-spacing:2px; color:var(--text-dim); margin-top:3px; }
+  #page2 .soc-list { display:flex; flex-direction:column; gap:5px; }
+  #page2 .soc-item { display:flex; align-items:center; gap:10px; padding:8px 10px; cursor:pointer; transition:all 0.15s; border:1px solid transparent; }
+  #page2 .soc-item:hover { background:var(--bg-hover); border-color:var(--border-dim); }
+  #page2 .soc-dot { width:9px; height:9px; border-radius:2px; flex-shrink:0; }
+  #page2 .soc-name { flex:1; font-family:var(--font-mono); font-size:11px; color:var(--text-main); letter-spacing:1px; }
+  #page2 .soc-perfiles { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); width:56px; text-align:right; }
+  #page2 .soc-reach { font-family:var(--font-mono); font-size:12px; color:var(--text-main); width:48px; text-align:right; }
+  #page2 .soc-pct { font-family:var(--font-mono); font-size:12px; width:42px; text-align:right; font-weight:600; }
+  #page2 .soc-arrow { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); width:16px; text-align:right; opacity:0; transition:opacity 0.15s; }
+  #page2 .soc-item:hover .soc-arrow { opacity:1; color:var(--accent); }
+  /* IND.03 */
+  #page2 .ind03-subtitle { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); letter-spacing:1px; margin-bottom:14px; }
+  #page2 .filter-bar { display:flex; align-items:center; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
+  #page2 .filter-label { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); letter-spacing:2px; }
+  #page2 .filter-btn { font-family:var(--font-mono); font-size:9px; letter-spacing:1px; padding:4px 12px; border:1px solid var(--border); color:var(--text-dim); background:transparent; cursor:pointer; transition:all 0.15s; display:flex; align-items:center; gap:5px; }
+  #page2 .filter-btn .fb-dot { width:6px; height:6px; border-radius:1px; }
+  #page2 .filter-btn.active { color:var(--current-color,var(--accent)); border-color:var(--current-color,var(--accent)); background:rgba(0,0,0,0.3); }
+  #page2 .filter-btn:hover  { color:var(--current-color,var(--accent)); border-color:var(--current-color,var(--accent)); }
+  #page2 .cards-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:14px; }
+  #page2 .eff-card { background:var(--bg-card); border:1px solid var(--border-dim); padding:12px 12px 10px; display:flex; flex-direction:column; gap:6px; }
+  #page2 .eff-card.rank1 { border-top:2px solid var(--green); }
+  #page2 .eff-card.rank2 { border-top:2px solid rgba(0,255,136,0.5); }
+  #page2 .eff-card.rank3 { border-top:2px solid rgba(0,255,136,0.25); }
+  #page2 .eff-platform { display:flex; align-items:center; gap:6px; }
+  #page2 .eff-icon { width:16px; height:16px; border-radius:2px; display:flex; align-items:center; justify-content:center; font-size:9px; flex-shrink:0; }
+  #page2 .eff-platform-name { font-family:var(--font-mono); font-size:8px; letter-spacing:2px; }
+  #page2 .eff-rank { font-family:var(--font-mono); font-size:8px; color:var(--text-faint); margin-left:auto; }
+  #page2 .eff-name { font-family:var(--font-ui); font-size:14px; font-weight:600; color:var(--text-main); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #page2 .eff-score { font-family:var(--font-display); font-size:34px; line-height:1; }
+  #page2 .eff-score.high { color:var(--green); text-shadow:0 0 12px rgba(0,255,136,0.4); }
+  #page2 .eff-score.mid  { color:var(--yellow); }
+  #page2 .eff-score.low  { color:var(--red); }
+  #page2 .eff-bar-wrap { height:2px; background:var(--border-dim); width:100%; }
+  #page2 .eff-bar-fill { height:100%; }
+  #page2 .eff-sub { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); line-height:1.4; }
+  #page2 .eff-interp { font-family:var(--font-mono); font-size:8px; letter-spacing:1px; padding:2px 5px; display:inline-block; margin-top:2px; }
+  #page2 .interp-high { color:var(--green); background:var(--green-dim); }
+  #page2 .interp-mid  { color:var(--yellow); background:var(--yellow-dim); }
+  #page2 .interp-low  { color:var(--text-faint); background:var(--red-dim); }
+  /* IND.04 */
+  #page2 .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:18px; }
+  #page2 .stat-box { background:var(--bg-card); border:1px solid var(--border-dim); padding:10px 14px; }
+  #page2 .stat-label { font-family:var(--font-mono); font-size:8px; letter-spacing:2px; color:var(--text-faint); margin-bottom:4px; }
+  #page2 .stat-val { font-family:var(--font-display); font-size:28px; line-height:1; }
+  #page2 .stat-val.red    { color:var(--red); }
+  #page2 .stat-val.yellow { color:var(--yellow); }
+  #page2 .stat-val.accent { color:var(--accent); }
+  #page2 .stat-sub { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); margin-top:3px; }
+  #page2 .op-list { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+  #page2 .op-card { background:var(--bg-card); border:1px solid var(--border-dim); border-left:3px solid transparent; padding:10px 14px; transition:background 0.15s; }
+  #page2 .op-card:hover { background:var(--bg-hover); }
+  #page2 .op-card.size3 { border-left-color:var(--red); }
+  #page2 .op-card.size2 { border-left-color:var(--yellow); }
+  #page2 .op-top { display:flex; align-items:flex-start; gap:10px; margin-bottom:7px; }
+  #page2 .op-size { flex-shrink:0; width:36px; height:36px; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px solid; }
+  #page2 .op-size.s3 { border-color:var(--red-brd); background:var(--red-dim); }
+  #page2 .op-size.s2 { border-color:var(--yellow-brd); background:var(--yellow-dim); }
+  #page2 .op-size-num { font-family:var(--font-display); font-size:20px; line-height:1; }
+  #page2 .op-size.s3 .op-size-num { color:var(--red); }
+  #page2 .op-size.s2 .op-size-num { color:var(--yellow); }
+  #page2 .op-size-label { font-family:var(--font-mono); font-size:7px; color:var(--text-faint); letter-spacing:1px; }
+  #page2 .op-meta { flex:1; min-width:0; }
+  #page2 .op-title { font-family:var(--font-ui); font-size:13px; font-weight:600; color:var(--text-main); line-height:1.3; margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #page2 .op-date { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); }
+  #page2 .op-badges { display:flex; align-items:center; gap:6px; flex-wrap:wrap; flex-shrink:0; }
+  #page2 .sentiment-badge { font-family:var(--font-mono); font-size:8px; letter-spacing:1px; padding:2px 7px; border:1px solid; }
+  #page2 .s-neutral  { color:var(--text-dim); border-color:var(--border); }
+  #page2 .s-negative { color:var(--red); border-color:var(--red-brd); background:var(--red-dim); }
+  #page2 .s-positive { color:var(--green); border-color:rgba(0,255,136,0.3); background:var(--green-dim); }
+  #page2 .category-badge { font-family:var(--font-mono); font-size:8px; letter-spacing:1px; padding:2px 7px; border:1px solid var(--border-dim); color:var(--text-faint); }
+  #page2 .op-domains { display:flex; align-items:center; gap:5px; flex-wrap:wrap; margin-top:7px; }
+  #page2 .domain-tag { font-family:var(--font-mono); font-size:9px; color:var(--accent); background:var(--accent-dim); padding:2px 8px; border:1px solid rgba(0,212,255,0.15); }
+  #page2 .domain-tag.recurrent { color:var(--red); background:var(--red-dim); border-color:var(--red-brd); }
+  #page2 .rec-grid { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+  #page2 .rec-row { display:flex; align-items:center; gap:12px; padding:8px 12px; background:var(--bg-card); border:1px solid var(--red-brd); }
+  #page2 .rec-domain { font-family:var(--font-mono); font-size:11px; color:var(--red); flex:1; }
+  #page2 .rec-count  { font-family:var(--font-display); font-size:22px; color:var(--red); width:32px; text-align:right; }
+  #page2 .rec-label  { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); }
+  #page2 .rec-ops    { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); flex:2; }
+  /* IND.05 */
+  #page2 .total-block { text-align:center; padding:10px 0 14px; border-bottom:1px solid var(--border-dim); margin-bottom:14px; }
+  #page2 .total-label { font-family:var(--font-mono); font-size:9px; letter-spacing:3px; color:var(--text-faint); margin-bottom:4px; }
+  #page2 .total-val { font-family:var(--font-display); font-size:48px; color:var(--text-main); line-height:1; }
+  #page2 .total-sub { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); margin-top:3px; }
+  #page2 .cards-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+  #page2 .reach-card { background:var(--bg-card); border:1px solid var(--border-dim); padding:12px 14px; }
+  #page2 .reach-card.social    { border-top:2px solid var(--purple); }
+  #page2 .reach-card.nonsocial { border-top:2px solid var(--accent); }
+  #page2 .rc-label { font-family:var(--font-mono); font-size:8px; letter-spacing:2px; margin-bottom:6px; }
+  #page2 .reach-card.social    .rc-label { color:var(--purple); }
+  #page2 .reach-card.nonsocial .rc-label { color:var(--accent); }
+  #page2 .rc-val { font-family:var(--font-display); font-size:32px; line-height:1; margin-bottom:4px; }
+  #page2 .reach-card.social    .rc-val { color:var(--purple); }
+  #page2 .reach-card.nonsocial .rc-val { color:var(--accent); }
+  #page2 .rc-pct { font-family:var(--font-mono); font-size:11px; margin-bottom:8px; }
+  #page2 .reach-card.social    .rc-pct { color:rgba(176,96,255,0.7); }
+  #page2 .reach-card.nonsocial .rc-pct { color:rgba(0,212,255,0.7); }
+  #page2 .rc-sub { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); }
+  #page2 .rc-bar-wrap { height:3px; background:var(--border-dim); margin-top:10px; }
+  #page2 .rc-bar-fill { height:100%; }
+  #page2 .reach-card.social    .rc-bar-fill { background:var(--purple); }
+  #page2 .reach-card.nonsocial .rc-bar-fill { background:var(--accent); }
+  #page2 .stacked-bar-wrap { height:20px; display:flex; overflow:hidden; border:1px solid var(--border-dim); margin-bottom:8px; }
+  #page2 .stacked-social    { background:var(--purple); height:100%; display:flex; align-items:center; justify-content:center; }
+  #page2 .stacked-nonsocial { background:var(--accent);  height:100%; flex:1; display:flex; align-items:center; justify-content:center; }
+  #page2 .stacked-label { font-family:var(--font-mono); font-size:8px; color:rgba(0,0,0,0.7); font-weight:700; white-space:nowrap; padding:0 6px; }
+  #page2 .bar-legend { display:flex; justify-content:space-between; margin-bottom:14px; }
+  #page2 .bar-leg-item { display:flex; align-items:center; gap:5px; }
+  #page2 .bar-leg-dot  { width:8px; height:8px; flex-shrink:0; }
+  #page2 .bar-leg-text { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); }
+  #page2 .sparkline-wrap { position:relative; margin-bottom:6px; }
+  #page2 .peak-row { display:flex; gap:8px; margin-bottom:14px; }
+  #page2 .peak-card { flex:1; background:var(--bg-card); border:1px solid var(--border-dim); padding:8px 10px; }
+  #page2 .peak-label { font-family:var(--font-mono); font-size:8px; letter-spacing:1px; color:var(--text-faint); margin-bottom:3px; }
+  #page2 .peak-val   { font-family:var(--font-display); font-size:18px; }
+  #page2 .peak-val.p { color:var(--purple); }
+  #page2 .peak-val.a { color:var(--accent); }
+  #page2 .peak-date  { font-family:var(--font-mono); font-size:9px; color:var(--text-faint); margin-top:2px; }
+  /* Modal P2 */
+  #p2ModalOverlay { display:none; position:fixed; inset:0; z-index:800; background:rgba(7,10,15,0.88); backdrop-filter:blur(4px); align-items:flex-start; justify-content:center; padding:40px 20px; overflow-y:auto; }
+  #p2ModalOverlay.open { display:flex; }
+  #p2ModalOverlay .lp-modal { background:var(--bg-panel); border:1px solid var(--border); border-top:2px solid var(--accent); width:100%; max-width:860px; max-height:90vh; display:flex; flex-direction:column; }
+  #p2ModalOverlay .lp-modal-header { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border-dim); flex-shrink:0; }
+  #p2ModalOverlay .lp-modal-title { font-family:var(--font-mono); font-size:10px; letter-spacing:3px; }
+  #p2ModalOverlay .lp-modal-subtitle { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); margin-top:3px; }
+  #p2ModalOverlay .lp-modal-close { width:28px; height:28px; background:var(--bg-card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--text-dim); cursor:pointer; transition:all 0.15s; }
+  #p2ModalOverlay .lp-modal-close:hover { border-color:var(--red); color:var(--red); }
+  #p2ModalOverlay .lp-modal-controls { display:flex; align-items:center; gap:8px; padding:10px 20px; border-bottom:1px solid var(--border-dim); background:var(--bg-card); flex-shrink:0; flex-wrap:wrap; }
+  #p2ModalOverlay .lp-modal-sort-label { font-family:var(--font-mono); font-size:9px; color:var(--text-dim); letter-spacing:2px; }
+  #p2ModalOverlay .lp-modal-sort-btn { font-family:var(--font-mono); font-size:9px; letter-spacing:1px; padding:3px 10px; border:1px solid var(--border); color:var(--text-dim); background:transparent; cursor:pointer; transition:all 0.15s; }
+  #p2ModalOverlay .lp-modal-sort-btn.active, #p2ModalOverlay .lp-modal-sort-btn:hover { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
+  #p2ModalOverlay .lp-modal-plat-filter { margin-left:auto; display:flex; gap:6px; align-items:center; }
+  #p2ModalOverlay .lp-plat-btn { font-family:var(--font-mono); font-size:8px; letter-spacing:1px; padding:3px 8px; border:1px solid var(--border); color:var(--text-faint); background:transparent; cursor:pointer; transition:all 0.15s; }
+  #p2ModalOverlay .lp-plat-btn.fb.active { border-color:#1877f2; background:rgba(24,119,242,0.15); color:#fff; }
+  #p2ModalOverlay .lp-plat-btn.tt.active { border-color:#aaa; background:rgba(200,200,200,0.1); color:#fff; }
+  #p2ModalOverlay .lp-plat-btn.ig.active { border-color:#e1306c; background:rgba(225,48,108,0.15); color:#fff; }
+  #p2ModalOverlay .lp-plat-btn.x.active  { border-color:#1da1f2; background:rgba(29,161,242,0.15); color:#fff; }
+  #p2ModalOverlay .lp-plat-btn.all.active { border-color:var(--accent); background:var(--accent-dim); color:var(--accent); }
+  #p2ModalOverlay .lp-modal-body { overflow-y:auto; flex:1; }
+  #p2ModalOverlay .lp-modal-table { width:100%; border-collapse:collapse; }
+  #p2ModalOverlay .lp-modal-table thead th { position:sticky; top:0; background:var(--bg-card); padding:8px 14px; font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text-dim); text-align:left; border-bottom:1px solid var(--border); cursor:pointer; white-space:nowrap; }
+  #p2ModalOverlay .lp-modal-table thead th:hover, #p2ModalOverlay .lp-modal-table thead th.sorted { color:var(--accent); }
+  #p2ModalOverlay .lp-modal-table tbody tr { border-bottom:1px solid var(--border-dim); cursor:pointer; transition:background 0.1s; }
+  #p2ModalOverlay .lp-modal-table tbody tr:hover { background:var(--bg-hover); }
+  #p2ModalOverlay .lp-modal-table tbody td { padding:9px 14px; font-family:var(--font-mono); font-size:11px; vertical-align:middle; }
+  #p2ModalOverlay .lp-modal-footer { padding:10px 20px; border-top:1px solid var(--border-dim); flex-shrink:0; display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:9px; color:var(--text-dim); flex-wrap:wrap; }
+  #p2ModalOverlay .lp-modal-stat-val { color:var(--accent); }
+  #p2ModalOverlay .lp-plat-chip { display:inline-flex; align-items:center; gap:5px; padding:2px 7px; border-radius:2px; font-family:var(--font-mono); font-size:9px; letter-spacing:1px; }
+  #p2ModalOverlay .lp-plat-chip.fb { background:rgba(24,119,242,0.15); color:#1877f2; border:1px solid rgba(24,119,242,0.3); }
+  #p2ModalOverlay .lp-plat-chip.tt { background:rgba(200,200,200,0.08); color:#ccc; border:1px solid rgba(200,200,200,0.2); }
+  #p2ModalOverlay .lp-plat-chip.ig { background:rgba(225,48,108,0.15); color:#e1306c; border:1px solid rgba(225,48,108,0.3); }
+  #p2ModalOverlay .lp-plat-chip.x  { background:rgba(29,161,242,0.12); color:#1da1f2; border:1px solid rgba(29,161,242,0.3); }
+  #p2ModalOverlay .lp-eff-high { color:var(--green); }
+  #p2ModalOverlay .lp-eff-mid  { color:var(--yellow); }
+  #p2ModalOverlay .lp-eff-low  { color:var(--red); }
+  /* Responsive P2 */
+  @media (max-width:1100px) {
+    #page2 .row-1, #page2 .row-3 { grid-template-columns:1fr; }
+    #page2 .ica-layout { grid-template-columns:180px 1fr; }
+    #page2 .ind02-layout { grid-template-columns:160px 1fr; }
+    #page2 .cards-grid { grid-template-columns:repeat(3,1fr); }
+  }
+  @media (max-width:640px) {
+    #page2 .row-1, #page2 .row-3 { grid-template-columns:1fr; }
+    #page2 .ica-layout { grid-template-columns:1fr; }
+    #page2 .stats-row { grid-template-columns:repeat(2,1fr); }
+    #page2 .cards-row { grid-template-columns:1fr; }
+  }
 </style>
 </head>
 <body>
@@ -705,18 +973,259 @@
 
   </div><!-- /page1 -->
 
-  <!-- PÁGINA 2: LISTENING (placeholder) -->
+  <!-- PÁGINA 2: LISTENING -->
   <div id="page2" class="page-section">
-    <div style="padding:40px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim); text-align:center;">
-      // PÁG. 02 — LISTENING — EN CONSTRUCCIÓN
-    </div>
-  </div>
+
+    <div class="listening-grid">
+
+      <!-- FILA 1: IND01 + IND02 -->
+      <div class="row-1">
+
+        <!-- IND.01 -->
+        <div class="panel" id="panel-ind01">
+          <div class="panel-header" data-color="yellow">
+            <div class="panel-title">IND. 01 — CONCENTRACIÓN DE AMPLIFICACIÓN (ICA)</div>
+            <div class="help-btn y">?
+              <div class="help-tooltip">
+                <div class="help-tt-title">// ICA — ÍNDICE CONCENTRACIÓN</div>
+                <p>% del reach total concentrado en los <span style="color:var(--yellow)">Top 3 perfiles</span>. Un ICA alto = dependencia de pocos actores.</p>
+                <div class="help-formula">ICA = Σ reach(top 3) ÷ Σ reach(total) × 100</div>
+                <div class="help-zones">
+                  <div class="help-zone"><div class="hz-dot" style="background:var(--green)"></div>0–33% Distribuido · bajo riesgo</div>
+                  <div class="help-zone"><div class="hz-dot" style="background:var(--yellow)"></div>33–66% Moderado · monitorear</div>
+                  <div class="help-zone"><div class="hz-dot" style="background:var(--orange)"></div>66–85% Alta dependencia · riesgo</div>
+                  <div class="help-zone"><div class="hz-dot" style="background:var(--red)"></div>85–100% Crítico · vulnerabilidad máxima</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ica-layout">
+            <div class="ica-gauge">
+              <div class="ica-sublabel">% REACH · TOP 3</div>
+              <div class="ica-number" id="icaNumber">—<span class="ica-pct">%</span></div>
+              <div class="ica-status" id="icaStatus">CARGANDO</div>
+              <div class="ica-scale-wrap">
+                <div class="ica-scale-track"><div class="ica-scale-pin" id="icaPin" style="left:0%"></div></div>
+                <div class="ica-scale-labels"><span>DISTRIBUIDO</span><span>33%</span><span>66%</span><span>CRÍTICO</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="rank-header">
+                <span>TOP INFLUENCERS</span>
+                <div class="rank-sort">
+                  <button class="sort-btn active" id="sortReach2"     onclick="lpInd01SortBy('reach')">REACH</button>
+                  <button class="sort-btn"         id="sortFollowers2" onclick="lpInd01SortBy('followers')">FOLLOWERS</button>
+                  <button class="sort-btn"         id="sortSov2"       onclick="lpInd01SortBy('sov')">SoV %</button>
+                  <button class="sort-btn"         id="sortEff2"       onclick="lpInd01SortBy('eff')">ALCANCE</button>
+                </div>
+              </div>
+              <div class="inf-list" id="infList"></div>
+              <div class="inf-others" id="othersBtn2" onclick="lpOpenModal01()">
+                <div class="inf-others-icon">···</div>
+                <div class="inf-others-label" id="othersLabel2">otros perfiles · reach combinado</div>
+                <div class="inf-others-cta">VER TODOS →</div>
+              </div>
+            </div>
+          </div>
+          <div class="insight-bar" id="insight01">⚡ Cargando datos…</div>
+        </div>
+
+        <!-- IND.02 -->
+        <div class="panel" id="panel-ind02">
+          <div class="panel-header" data-color="purple">
+            <div class="panel-title">IND. 02 — REACH POR RED SOCIAL</div>
+            <div class="help-btn p">?
+              <div class="help-tooltip">
+                <div class="help-tt-title">// ¿QUÉ MUESTRA?</div>
+                <p>Distribución del reach total generado por influencers, agrupado por plataforma.</p>
+                <p>El centro muestra las <span style="color:var(--accent)">menciones totales</span>. Click en cualquier red para filtrar el modal.</p>
+              </div>
+            </div>
+          </div>
+          <div class="ind02-layout">
+            <div>
+              <div class="donut-wrap">
+                <canvas id="socialDonut"></canvas>
+                <div class="donut-center">
+                  <div class="donut-center-val" id="centerVal">—</div>
+                  <div class="donut-center-label">MENCIONES</div>
+                </div>
+              </div>
+            </div>
+            <div class="soc-list" id="socList"></div>
+          </div>
+          <div class="insight-bar" id="insight02">⚡ Cargando datos…</div>
+        </div>
+
+      </div><!-- /row-1 -->
+
+      <!-- FILA 2: IND03 (ancho completo) -->
+      <div class="panel" id="panel-ind03">
+        <div class="panel-header" data-color="green">
+          <div class="panel-title">IND. 03 — EFICIENCIA DE AMPLIFICACIÓN (ALCANCE Nx)</div>
+          <div class="help-btn g">?
+            <div class="help-tooltip">
+              <div class="help-tt-title">// ¿QUÉ ES EL ALCANCE Nx?</div>
+              <p><strong style="color:var(--text-main)">Nx = reach ÷ followers</strong></p>
+              <p>Cuántas veces multiplicó su audiencia propia.</p>
+              <div style="margin:6px 0 4px;">
+                <div class="help-zone"><div class="hz-dot" style="background:var(--green)"></div><div style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);">≥ 2.0x — VIRAL</div></div>
+                <div class="help-zone"><div class="hz-dot" style="background:var(--yellow)"></div><div style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);">0.5x – 2.0x — NORMAL</div></div>
+                <div class="help-zone"><div class="hz-dot" style="background:var(--red)"></div><div style="font-family:var(--font-mono);font-size:8px;color:var(--text-dim);">&lt; 0.5x — BAJO</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ind03-subtitle">↑ Mayor = convierte mejor su audiencia en alcance efectivo · Nx = reach ÷ followers · top 5 por red</div>
+        <div class="filter-bar" id="filterBar03"></div>
+        <div class="cards-grid" id="cardsGrid03"></div>
+        <div class="insight-bar" id="insight03">⚡ Cargando datos…</div>
+      </div>
+
+      <!-- FILA 3: IND04 + IND05 -->
+      <div class="row-3">
+
+        <!-- IND.04 -->
+        <div class="panel" id="panel-ind04">
+          <div class="panel-header" data-color="red">
+            <div class="panel-title">IND. 04 — OPERACIONES DE PRENSA COORDINADAS</div>
+            <div class="help-btn r">?
+              <div class="help-tooltip">
+                <div class="help-tt-title">// ¿QUÉ ES UNA OPERACIÓN?</div>
+                <p>Una nota replicada por 2+ medios con contenido idéntico (mismo <span style="color:var(--accent)">content_hash</span>).</p>
+                <p>Un operador <strong style="color:var(--red)">recurrente</strong> aparece en 2+ operaciones distintas.</p>
+              </div>
+            </div>
+          </div>
+          <div class="stats-row" id="stats04">
+            <div class="stat-box"><div class="stat-label">OPERACIONES ACTIVAS</div><div class="stat-val red" id="s04-ops">—</div><div class="stat-sub">narrativas coordinadas</div></div>
+            <div class="stat-box"><div class="stat-label">MEDIOS INVOLUCRADOS</div><div class="stat-val accent" id="s04-media">—</div><div class="stat-sub">operadores únicos</div></div>
+            <div class="stat-box"><div class="stat-label">OPERADORES RECURRENTES</div><div class="stat-val yellow" id="s04-recur">—</div><div class="stat-sub">en 2+ operaciones</div></div>
+            <div class="stat-box"><div class="stat-label">MAYOR ALCANCE</div><div class="stat-val red" id="s04-max">—</div><div class="stat-sub" id="s04-maxsub">medios</div></div>
+          </div>
+          <div class="section-label">// OPERACIONES DETECTADAS</div>
+          <div class="op-list" id="opList04"></div>
+          <div class="section-label">// OPERADORES RECURRENTES</div>
+          <div class="rec-grid" id="recGrid04"></div>
+          <div class="insight-bar" id="insight04">⚡ Cargando datos…</div>
+        </div>
+
+        <!-- IND.05 -->
+        <div class="panel" id="panel-ind05">
+          <div class="panel-header" data-color="accent">
+            <div class="panel-title">IND. 05 — REACH · SOCIAL vs NO SOCIAL</div>
+            <div class="help-btn a">?
+              <div class="help-tooltip">
+                <div class="help-tt-title">// CANALES DE REACH</div>
+                <p><span style="color:var(--purple)">SOCIAL</span> — reach en redes sociales (Facebook, TikTok, Instagram, X).</p>
+                <p><span style="color:var(--accent)">NO SOCIAL</span> — reach en medios digitales, portales y blogs.</p>
+              </div>
+            </div>
+          </div>
+          <div class="total-block">
+            <div class="total-label">REACH TOTAL ACUMULADO</div>
+            <div class="total-val" id="i05-total">—</div>
+            <div class="total-sub" id="i05-period">Cargando…</div>
+          </div>
+          <div class="cards-row">
+            <div class="reach-card social">
+              <div class="rc-label">SOCIAL MEDIA</div>
+              <div class="rc-val" id="i05-social">—</div>
+              <div class="rc-pct" id="i05-social-pct">—</div>
+              <div class="rc-sub">Redes sociales</div>
+              <div class="rc-bar-wrap"><div class="rc-bar-fill" id="i05-social-bar" style="width:0%"></div></div>
+            </div>
+            <div class="reach-card nonsocial">
+              <div class="rc-label">NO SOCIAL</div>
+              <div class="rc-val" id="i05-nonsocial">—</div>
+              <div class="rc-pct" id="i05-nonsocial-pct">—</div>
+              <div class="rc-sub">Portales y medios</div>
+              <div class="rc-bar-wrap"><div class="rc-bar-fill" id="i05-nonsocial-bar" style="width:0%"></div></div>
+            </div>
+          </div>
+          <div class="section-label">// DISTRIBUCIÓN</div>
+          <div class="stacked-bar-wrap">
+            <div class="stacked-social" id="i05-stacked-s" style="width:50%"><span class="stacked-label" id="i05-stacked-slabel">SOCIAL —</span></div>
+            <div class="stacked-nonsocial"><span class="stacked-label" id="i05-stacked-nlabel">NO SOCIAL —</span></div>
+          </div>
+          <div class="bar-legend">
+            <div class="bar-leg-item"><div class="bar-leg-dot" style="background:var(--purple)"></div><span class="bar-leg-text">Social Media</span></div>
+            <div class="bar-leg-item"><div class="bar-leg-dot" style="background:var(--accent)"></div><span class="bar-leg-text">Portales / Medios</span></div>
+          </div>
+          <div class="section-label">// EVOLUCIÓN DIARIA</div>
+          <div class="sparkline-wrap">
+            <canvas id="spark05"></canvas>
+          </div>
+          <div class="peak-row">
+            <div class="peak-card"><div class="peak-label">PICO SOCIAL</div><div class="peak-val p" id="i05-pk-sval">—</div><div class="peak-date" id="i05-pk-sdate">—</div></div>
+            <div class="peak-card"><div class="peak-label">PICO NO SOCIAL</div><div class="peak-val a" id="i05-pk-nval">—</div><div class="peak-date" id="i05-pk-ndate">—</div></div>
+            <div class="peak-card"><div class="peak-label">DÍAS ACTIVOS</div><div class="peak-val" style="color:var(--text-main)" id="i05-dias">—</div><div class="peak-date" id="i05-dias-total">de — totales</div></div>
+          </div>
+          <div class="insight-bar" id="insight05">⚡ Cargando datos…</div>
+        </div>
+
+      </div><!-- /row-3 -->
+
+    </div><!-- /listening-grid -->
+
+  </div><!-- /page2 -->
 
   <footer>
     <span>// WAR ROOM DIGITAL · INTELIGENCIA NARRATIVA, OPORTUNIDADES Y RIESGO POLÍTICO</span>
     <span>FUENTE: BRAND24 + INGESTA AUTOMATIZADA + GOOGLE TRENDS · IA ESTRATEGICA</span>
     <span id="timestamp"></span>
   </footer>
+</div>
+
+<!-- MODAL P2: FUENTES AMPLIFICADORAS -->
+<div id="p2ModalOverlay" onclick="if(event.target===this)lpCloseModal()">
+  <div class="lp-modal" onclick="event.stopPropagation()">
+    <div class="lp-modal-header">
+      <div>
+        <div class="lp-modal-title" id="lpModalTitle" style="color:var(--accent)">INFLUENCERS</div>
+        <div class="lp-modal-subtitle" id="lpModalSubtitle"></div>
+      </div>
+      <div class="lp-modal-close" onclick="lpCloseModal()">✕</div>
+    </div>
+    <div class="lp-modal-controls">
+      <div class="lp-modal-sort-label">ORDENAR:</div>
+      <button class="lp-modal-sort-btn active" onclick="lpModalSort('reach',this)">REACH ↓</button>
+      <button class="lp-modal-sort-btn" onclick="lpModalSort('followers',this)">FOLLOWERS</button>
+      <button class="lp-modal-sort-btn" onclick="lpModalSort('eff',this)">ALCANCE</button>
+      <button class="lp-modal-sort-btn" onclick="lpModalSort('sov',this)">SoV %</button>
+      <div class="lp-modal-plat-filter">
+        <button class="lp-plat-btn all active" onclick="lpFilterPlat('all',this)">TODOS</button>
+        <button class="lp-plat-btn fb" onclick="lpFilterPlat('facebook.com',this)">FB</button>
+        <button class="lp-plat-btn tt" onclick="lpFilterPlat('tiktok.com',this)">TK</button>
+        <button class="lp-plat-btn ig" onclick="lpFilterPlat('instagram.com',this)">IG</button>
+        <button class="lp-plat-btn x"  onclick="lpFilterPlat('x.com',this)">X</button>
+      </div>
+    </div>
+    <div class="lp-modal-body">
+      <table class="lp-modal-table">
+        <thead>
+          <tr>
+            <th class="col-mob-hide">#</th>
+            <th onclick="lpModalSort('name',this)">PERFIL ↕</th>
+            <th onclick="lpModalSort('plat',this)">RED ↕</th>
+            <th onclick="lpModalSort('reach',this)" class="sorted">REACH ↓</th>
+            <th onclick="lpModalSort('followers',this)">FOLLOWERS ↕</th>
+            <th onclick="lpModalSort('eff',this)">ALCANCE ↕</th>
+            <th onclick="lpModalSort('sov',this)" class="col-mob-hide">SoV % ↕</th>
+            <th class="col-mob-hide">MENS.</th>
+          </tr>
+        </thead>
+        <tbody id="lpModalTbody"></tbody>
+      </table>
+    </div>
+    <div class="lp-modal-footer">
+      <div>REACH TOTAL: <span class="lp-modal-stat-val" id="lpModalTotalReach"></span></div>
+      <div>PERFILES: <span class="lp-modal-stat-val" id="lpModalCount"></span></div>
+      <div>REACH PROM: <span class="lp-modal-stat-val" id="lpModalAvgReach"></span></div>
+      <div>ALCANCE PROM: <span class="lp-modal-stat-val" id="lpModalAvgEff"></span></div>
+      <div style="margin-left:auto;color:var(--text-faint);font-family:var(--font-mono);font-size:8px;">📅 ÚLTIMO SNAPSHOT</div>
+    </div>
+  </div>
 </div>
 
 <!-- DRAWER -->
@@ -808,6 +1317,7 @@ function switchPage(n) {
   document.getElementById('pageSelectorLabel').textContent = items[n - 1].textContent;
   document.getElementById('pageNav').classList.remove('open');
   document.querySelector('.filter-count').style.display = n === 1 ? '' : 'none';
+  if (n === 2 && !p2Initialized) { p2Initialized = true; p2Init(); }
 }
 function togglePageMenu() {
   document.getElementById('pageNav').classList.toggle('open');
@@ -876,6 +1386,7 @@ function applyFilter() {
   filteredData = ALL_MENTIONS.filter(m => m.date >= from && m.date <= to);
   if (activeKw) filteredData = filteredData.filter(m => matchKw(m, activeKw));
   updateAll();
+  if (p2Initialized) p2LoadData();
 }
 function resetFilter() {
   const _localToday = (d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`)(new Date());
@@ -887,6 +1398,7 @@ function resetFilter() {
   document.getElementById('feedFilter').textContent = '';
   filteredData = ALL_MENTIONS.filter(m => m.date >= _localFrom && m.date <= _localToday);
   updateAll();
+  if (p2Initialized) p2LoadData();
 }
 function filterCurrentMonth() {
   const now = new Date();
@@ -1445,6 +1957,557 @@ donutChart = new Chart(doCtx, {
 
 // Cargar datos desde la API
 loadData();
+
+// ══════════════════════════════════════════
+// PAGE 2 — LISTENING / AMPLIFICACIÓN
+// ══════════════════════════════════════════
+
+// ── State ────────────────────────────────
+let p2Initialized = false;
+let p2Data        = null;
+let lpInfData     = [];
+let lpGroups      = [];
+let lpSortKey     = 'reach';
+let lpActiveFilter03 = 'all';
+let lpModalSortKey = 'reach', lpModalSortDir = -1;
+let lpModalPlatFilter = 'all', lpModalDataset = null;
+let lpDonutChart  = null;
+
+// ── Platform constants ────────────────────
+const LP_PLAT = {
+  'facebook.com':  { chip:'fb', label:'Facebook',  color:'#1877f2', icon:'f' },
+  'tiktok.com':    { chip:'tt', label:'TikTok',    color:'#cccccc', icon:'♪' },
+  'instagram.com': { chip:'ig', label:'Instagram', color:'#e1306c', icon:'◈' },
+  'x.com':         { chip:'x',  label:'X',         color:'#1da1f2', icon:'✦' },
+};
+const LP_PLATFORMS = [
+  { key:'facebook.com',  label:'Facebook',    color:'#1877f2', colorDim:'rgba(24,119,242,0.15)', icon:'f' },
+  { key:'tiktok.com',    label:'TikTok',      color:'#cccccc', colorDim:'rgba(200,200,200,0.10)', icon:'♪' },
+  { key:'instagram.com', label:'Instagram',   color:'#e1306c', colorDim:'rgba(225,48,108,0.15)', icon:'◈' },
+  { key:'x.com',         label:'X / Twitter', color:'#1da1f2', colorDim:'rgba(29,161,242,0.12)', icon:'✦' },
+];
+const LP_FILTERS03 = [
+  { key:'all',          label:'TODAS',    icon:'·', color:'#00d4ff', dot:'#00d4ff' },
+  { key:'facebook.com', label:'FACEBOOK', icon:'f', color:'#1877f2', dot:'#1877f2' },
+  { key:'tiktok.com',   label:'TIKTOK',   icon:'♪', color:'#cccccc', dot:'#cccccc' },
+  { key:'instagram.com',label:'INSTAGRAM',icon:'◈', color:'#e1306c', dot:'#e1306c' },
+  { key:'x.com',        label:'X',        icon:'✦', color:'#1da1f2', dot:'#1da1f2' },
+];
+
+// ── Helpers ───────────────────────────────
+function lpFmtK(n) {
+  if (!n || n === 0) return '0';
+  if (n >= 1e6) return (n/1e6).toFixed(1)+'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1)+'k';
+  return String(Math.round(n));
+}
+function lpFmtNx(v) { return v >= 10 ? v.toFixed(1)+'x' : v.toFixed(2)+'x'; }
+function lpEffClass(v) { return v >= 2 ? 'high' : v >= 0.5 ? 'mid' : 'low'; }
+function lpInterpLabel(v) {
+  if (v >= 2)   return ['VIRAL',  'interp-high'];
+  if (v >= 0.5) return ['NORMAL', 'interp-mid'];
+  return             ['BAJO',   'interp-low'];
+}
+function lpPlatChip(domain) {
+  const p = LP_PLAT[domain] || { chip:'', label:domain, color:'#aaa', icon:'·' };
+  return `<span class="lp-plat-chip ${p.chip}">${p.icon} ${p.label}</span>`;
+}
+function lpSentStr(s) {
+  if (s === 1  || s === 'positive') return 'positive';
+  if (s === -1 || s === 'negative') return 'negative';
+  return 'neutral';
+}
+
+// ── Init & Load ───────────────────────────
+function p2Init() {
+  lpInitDonut();
+  p2LoadData();
+}
+
+async function p2LoadData() {
+  const from = document.getElementById('dateFrom').value;
+  const to   = document.getElementById('dateTo').value;
+  try {
+    const resp = await fetch(`${CONFIG.apiUrl}/api/listening/summary?dateFrom=${from}&dateTo=${to}`, {
+      headers: { Accept: 'application/json', 'ngrok-skip-browser-warning': 'true' },
+      mode: 'cors',
+    });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status} — ${resp.statusText}`);
+    p2Data = await resp.json();
+    lpMapData();
+    lpRenderAll();
+  } catch(err) {
+    console.error('p2LoadData error:', err);
+    document.getElementById('infList').innerHTML =
+      `<div style="color:var(--red);font-family:var(--font-mono);font-size:10px;padding:14px">// Error: ${err.message}</div>`;
+  }
+}
+
+function lpMapData() {
+  if (!p2Data) return;
+  const inf = p2Data.influencers || {};
+  const rawProfiles = inf.profiles || [];
+  const totalMentions = inf.total_mentions || 1;
+  // Map API fields to expected format
+  lpInfData = rawProfiles.map(p => ({
+    name:      p.profile_name || p.name || '—',
+    domain:    p.domain || '',
+    reach:     p.reach     || 0,
+    followers: p.followers || 0,
+    mentions:  p.mentions  || 0,
+    eff:       p.eff       != null ? parseFloat(p.eff) : (p.followers > 0 ? p.reach / p.followers : 0),
+    sov:       totalMentions > 0 ? ((p.mentions || 0) / totalMentions * 100) : 0,
+  }));
+  // Build platform groups from profiles
+  lpGroups = LP_PLATFORMS.map(pl => {
+    const rows = lpInfData.filter(r => r.domain === pl.key);
+    return { ...pl, rows, reach: rows.reduce((s,r)=>s+r.reach,0), mentions: rows.reduce((s,r)=>s+r.mentions,0), perfiles: rows.length };
+  }).filter(g => g.perfiles > 0);
+}
+
+const LP_NO_DATA_HTML = `<div style="padding:24px 0;text-align:center;font-family:var(--font-mono);font-size:10px;color:var(--text-faint);letter-spacing:2px">// SIN DATOS PARA EL PERÍODO SELECCIONADO</div>`;
+
+function lpRenderAll() {
+  if (!p2Data) return;
+  lpRenderInd01();
+  lpRenderInd02();
+  lpBuildFilters03(); lpRenderCards03();
+  lpRenderInd04();
+  lpRenderInd05();
+}
+
+// ── IND.01 ───────────────────────────────
+function lpInd01SortBy(key) {
+  lpSortKey = key;
+  ['sortReach2','sortFollowers2','sortSov2','sortEff2'].forEach(id => {
+    document.getElementById(id)?.classList.remove('active');
+  });
+  const map = { reach:'sortReach2', followers:'sortFollowers2', sov:'sortSov2', eff:'sortEff2' };
+  document.getElementById(map[key])?.classList.add('active');
+  lpRenderInd01();
+}
+
+function lpRenderInd01() {
+  if (lpInfData.length === 0) {
+    document.getElementById('icaNumber').innerHTML = `—<span class="ica-pct">%</span>`;
+    document.getElementById('icaPin').style.left = '0%';
+    const st = document.getElementById('icaStatus');
+    st.className = 'ica-status'; st.textContent = 'SIN DATOS';
+    document.getElementById('infList').innerHTML = LP_NO_DATA_HTML;
+    document.getElementById('othersLabel2').textContent = '—';
+    document.getElementById('insight01').innerHTML = '// Sin datos de influencers para el período seleccionado.';
+    return;
+  }
+  const sorted = [...lpInfData].sort((a,b) => b[lpSortKey] - a[lpSortKey]);
+  const TOP_N = 3;
+  const top  = sorted.slice(0, TOP_N);
+  const rest = sorted.slice(TOP_N);
+  const totalReach = lpInfData.reduce((s,r)=>s+r.reach,0) || 1;
+  const topReach   = top.reduce((s,r)=>s+r.reach,0);
+  const ica = Math.round(topReach / totalReach * 100);
+
+  document.getElementById('icaNumber').innerHTML = `${ica}<span class="ica-pct">%</span>`;
+  document.getElementById('icaPin').style.left = ica + '%';
+  let stCls = 'status-baja', stTxt = '◎ AMPLIFICACIÓN DISTRIBUIDA';
+  if (ica >= 85)      { stCls='status-alta';  stTxt='⚠ CONCENTRACIÓN CRÍTICA'; }
+  else if (ica >= 66) { stCls='status-alta';  stTxt='⚠ ALTA DEPENDENCIA'; }
+  else if (ica >= 33) { stCls='status-media'; stTxt='◈ CONCENTRACIÓN MEDIA'; }
+  const st = document.getElementById('icaStatus');
+  st.className = 'ica-status ' + stCls; st.textContent = stTxt;
+
+  const maxVal  = sorted[0]?.[lpSortKey] || 1;
+  const colors  = ['var(--accent)','var(--yellow)','var(--green)'];
+  document.getElementById('infList').innerHTML = top.map((r,i) => {
+    const p   = LP_PLAT[r.domain] || {};
+    const pct = (r[lpSortKey] / maxVal * 100).toFixed(1);
+    const valFmt = lpSortKey==='reach'     ? lpFmtK(r.reach)
+                 : lpSortKey==='followers' ? lpFmtK(r.followers)
+                 : lpSortKey==='sov'       ? r.sov.toFixed(1)+'%'
+                 : r.eff.toFixed(2)+'x';
+    return `<div class="inf-item">
+      <div class="inf-rank">${i+1}</div>
+      <div class="inf-icon" style="background:${p.color||'#333'}">${p.icon||'·'}</div>
+      <div class="inf-info">
+        <div class="inf-name">${r.name}</div>
+        <div class="inf-sub">${r.domain} · ${lpFmtK(r.followers)} seguidores · SoV ${r.sov.toFixed(1)}%</div>
+      </div>
+      <div class="inf-bar-track"><div class="inf-bar-fill" style="width:${pct}%;background:${colors[i]||'var(--text-dim)'};"></div></div>
+      <div class="inf-val" style="color:${colors[i]||'var(--text-dim)'}">${valFmt}</div>
+    </div>`;
+  }).join('');
+
+  const restReach = rest.reduce((s,r)=>s+r.reach,0);
+  const restPct   = totalReach > 0 ? Math.round(restReach/totalReach*100) : 0;
+  document.getElementById('othersLabel2').textContent =
+    `otros ${rest.length} perfiles · reach combinado ~${restPct}% del total`;
+
+  document.getElementById('insight01').innerHTML =
+    `⚡ ICA <span class="hl-y">${ica}%</span> — concentración <span class="hl-y">${ica>=66?'ALTA':'MEDIA'}</span> · ` +
+    `Top 3: <span class="hl">${top.map(r=>r.name).join(', ')}</span> · ` +
+    `${lpInfData.length} perfiles · reach total <span class="hl-a">${lpFmtK(totalReach)}</span>`;
+
+  lpModalDataset = lpInfData;
+}
+
+// ── IND.02 ───────────────────────────────
+function lpInitDonut() {
+  const ctx = document.getElementById('socialDonut').getContext('2d');
+  lpDonutChart = new Chart(ctx, {
+    type:'doughnut',
+    data:{ datasets:[{ data:[1], backgroundColor:['rgba(0,212,255,0.15)'], borderColor:['#1e2d3d'], borderWidth:1 }] },
+    options:{
+      cutout:'68%', responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{display:false}, tooltip:{enabled:false} },
+      onClick:(_,els) => { if(els.length && lpGroups[els[0].index]) lpOpenModal02(lpGroups[els[0].index]); }
+    }
+  });
+}
+
+function lpRenderInd02() {
+  if (lpInfData.length === 0) {
+    document.getElementById('centerVal').textContent = '—';
+    document.getElementById('socList').innerHTML = LP_NO_DATA_HTML;
+    document.getElementById('insight02').innerHTML = '// Sin datos para el período seleccionado.';
+    if (lpDonutChart) { lpDonutChart.data.datasets[0].data=[1]; lpDonutChart.data.datasets[0].backgroundColor=['rgba(30,45,61,0.5)']; lpDonutChart.data.labels=[]; lpDonutChart.update(); }
+    return;
+  }
+  const totalReach02 = lpGroups.reduce((s,g)=>s+g.reach,0) || 1;
+  const totalMentions = lpInfData.reduce((s,r)=>s+r.mentions,0);
+
+  if (lpDonutChart && lpGroups.length > 0) {
+    lpDonutChart.data.labels                      = lpGroups.map(g=>g.label);
+    lpDonutChart.data.datasets[0].data            = lpGroups.map(g=>g.reach);
+    lpDonutChart.data.datasets[0].backgroundColor = lpGroups.map(g=>g.color);
+    lpDonutChart.data.datasets[0].borderColor     = ['#0c1118'];
+    lpDonutChart.data.datasets[0].borderWidth     = 3;
+    lpDonutChart.options.plugins.tooltip = {
+      callbacks:{ label: c => {
+        const g = lpGroups[c.dataIndex];
+        return [` Reach: ${lpFmtK(g.reach)} (${(g.reach/totalReach02*100).toFixed(1)}%)`,` Perfiles: ${g.perfiles}`,` Menciones: ${g.mentions}`];
+      }},
+      backgroundColor:'#111820', borderColor:'#1e2d3d', borderWidth:1,
+      titleColor:'#d4e4f0', bodyColor:'#5a7a94',
+      titleFont:{family:'JetBrains Mono',size:11}, bodyFont:{family:'JetBrains Mono',size:10}, padding:10,
+    };
+    lpDonutChart.update();
+  }
+  document.getElementById('centerVal').textContent = totalMentions;
+
+  document.getElementById('socList').innerHTML = lpGroups.map((g,i) => {
+    const pct = (g.reach/totalReach02*100).toFixed(1);
+    return `<div class="soc-item" onclick="lpOpenModal02(lpGroups[${i}])" style="--current-color:${g.color}">
+      <div class="soc-dot" style="background:${g.color}"></div>
+      <div class="soc-name">${g.label}</div>
+      <div class="soc-perfiles">${g.perfiles} perfiles</div>
+      <div class="soc-reach">${lpFmtK(g.reach)}</div>
+      <div class="soc-pct" style="color:${g.color}">${pct}%</div>
+      <div class="soc-arrow">→</div>
+    </div>`;
+  }).join('');
+
+  const fb = lpGroups.find(g=>g.key==='facebook.com');
+  const tk = lpGroups.find(g=>g.key==='tiktok.com');
+  const fbEff = fb && fb.rows.reduce((s,r)=>s+r.followers,0) > 0 ? (fb.reach/fb.rows.reduce((s,r)=>s+r.followers,0)).toFixed(2) : '—';
+  const tkEff = tk && tk.rows.reduce((s,r)=>s+r.followers,0) > 0 ? (tk.reach/tk.rows.reduce((s,r)=>s+r.followers,0)).toFixed(2) : '—';
+  document.getElementById('insight02').innerHTML =
+    `ℹ Reach por plataforma. ` +
+    (fb ? `Eficiencia FB: <span class="hl-a">${fbEff}x</span> · ` : '') +
+    (tk ? `TK: <span class="hl-a">${tkEff}x</span>` : '');
+}
+
+// ── IND.03 ───────────────────────────────
+function lpBuildFilters03() {
+  const bar = document.getElementById('filterBar03');
+  if (!bar) return;
+  bar.innerHTML = `<div class="filter-label">RED:</div>`;
+  LP_FILTERS03.forEach(f => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (f.key===lpActiveFilter03?' active':'');
+    btn.style.setProperty('--current-color', f.color);
+    btn.innerHTML = `<span class="fb-dot" style="background:${f.dot}"></span>${f.label}`;
+    btn.onclick = () => { lpActiveFilter03=f.key; lpBuildFilters03(); lpRenderCards03(); };
+    bar.appendChild(btn);
+  });
+}
+
+function lpRenderCards03() {
+  if (lpInfData.length === 0) {
+    document.getElementById('cardsGrid03').innerHTML = LP_NO_DATA_HTML;
+    document.getElementById('insight03').innerHTML = '// Sin datos para el período seleccionado.';
+    return;
+  }
+  const pool   = lpActiveFilter03==='all' ? lpInfData : lpInfData.filter(r=>r.domain===lpActiveFilter03);
+  const sorted = [...pool].sort((a,b)=>b.eff-a.eff);
+  const top5   = sorted.slice(0,5);
+  while (top5.length < 5) top5.push(null);
+  const maxEff = top5[0]?.eff || 1;
+
+  const grid = document.getElementById('cardsGrid03');
+  if (!grid) return;
+  grid.innerHTML = top5.map((r,i) => {
+    if (!r) return `<div class="eff-card" style="opacity:0.15;pointer-events:none;"></div>`;
+    const f = LP_FILTERS03.find(f=>f.key===r.domain) || { label:r.domain, icon:'●', color:'#5a7a94', dot:'#5a7a94' };
+    const ec = lpEffClass(r.eff);
+    const [ilabel, iclass] = lpInterpLabel(r.eff);
+    const barPct   = (r.eff/maxEff*100).toFixed(1);
+    const barColor = r.eff>=2?'var(--green)':r.eff>=0.5?'var(--yellow)':'var(--red)';
+    const rankCls  = i===0?'rank1':i===1?'rank2':i===2?'rank3':'';
+    return `<div class="eff-card ${rankCls}">
+      <div class="eff-platform">
+        <div class="eff-icon" style="background:${f.color}22;color:${f.color}">${f.icon}</div>
+        <div class="eff-platform-name" style="color:${f.color}">${f.label}</div>
+        <div class="eff-rank">#${i+1}</div>
+      </div>
+      <div class="eff-name" title="${r.name}">${r.name}</div>
+      <div class="eff-score ${ec}">${lpFmtNx(r.eff)}</div>
+      <div class="eff-bar-wrap"><div class="eff-bar-fill" style="width:${barPct}%;background:${barColor}"></div></div>
+      <div class="eff-sub">${lpFmtK(r.reach)} reach / ${lpFmtK(r.followers)} followers</div>
+      <div class="eff-sub">${r.mentions} mención${r.mentions!==1?'es':''}</div>
+      <div><span class="eff-interp ${iclass}">${ilabel}</span></div>
+    </div>`;
+  }).join('');
+
+  if (sorted.length) {
+    const viral  = sorted.filter(r=>r.eff>=2).length;
+    const normal = sorted.filter(r=>r.eff>=0.5&&r.eff<2).length;
+    const bajo   = sorted.filter(r=>r.eff<0.5).length;
+    const avg    = sorted.reduce((s,r)=>s+r.eff,0)/sorted.length;
+    const fLabel = lpActiveFilter03==='all' ? 'el conjunto' : (LP_FILTERS03.find(f=>f.key===lpActiveFilter03)?.label||lpActiveFilter03);
+    document.getElementById('insight03').innerHTML =
+      `⚡ <span class="hl">${sorted[0].name}</span> lidera con <span class="hl">${lpFmtNx(sorted[0].eff)}</span> en ${fLabel} · ` +
+      `Distribución: <span class="hl">${viral} viral</span> / <span class="hl-y">${normal} normal</span> / ${bajo} bajo · ` +
+      `Promedio: <span class="hl-y">${avg.toFixed(2)}x</span>`;
+  }
+}
+
+// ── IND.04 ───────────────────────────────
+function lpRenderInd04() {
+  if (!p2Data) return;
+  const ops       = p2Data.operations || {};
+  const stats     = ops.stats     || {};
+  const opList    = ops.list      || [];
+  const recurring = ops.recurring || [];
+
+  document.getElementById('s04-ops').textContent   = stats.total_ops        || '0';
+  document.getElementById('s04-media').textContent = stats.total_media       || '0';
+  document.getElementById('s04-recur').textContent = stats.recurring_count   || '0';
+  document.getElementById('s04-max').textContent   = stats.max_reach_size    || '0';
+  document.getElementById('s04-maxsub').textContent = stats.max_reach_narrative
+    ? `medios · ${stats.max_reach_narrative}` : 'medios';
+
+  const recurDomains = new Set(recurring.map(r=>r.domain));
+  const sentClass = s => { const ss=lpSentStr(s); return ss==='negative'?'s-negative':ss==='positive'?'s-positive':'s-neutral'; };
+  const sentLabel = s => { const ss=lpSentStr(s); return ss==='negative'?'NEGATIVO':ss==='positive'?'POSITIVO':'NEUTRAL'; };
+
+  document.getElementById('opList04').innerHTML = opList.map(op => {
+    const sz     = op.group_size || op.size || 2;
+    const szCls  = sz>=3?'size3':'size2';
+    const szSub  = sz>=3?'s3':'s2';
+    const domains = Array.isArray(op.domains) ? op.domains
+                  : (op.medios ? op.medios.split(',').map(s=>s.trim()) : []);
+    const dateStr = op.date ? (typeof op.date==='string' ? op.date.slice(0,10) : op.date) : '—';
+    return `<div class="op-card ${szCls}">
+      <div class="op-top">
+        <div class="op-size ${szSub}"><div class="op-size-num">${sz}</div><div class="op-size-label">MEDIOS</div></div>
+        <div class="op-meta">
+          <div class="op-title" title="${(op.title||'').replace(/"/g,'&quot;')}">${op.title||'(Sin título)'}</div>
+          <div class="op-date">${dateStr} · ${op.category||'—'}</div>
+        </div>
+        <div class="op-badges">
+          <span class="sentiment-badge ${sentClass(op.sentiment)}">${sentLabel(op.sentiment)}</span>
+          <span class="category-badge">${op.category||'—'}</span>
+        </div>
+      </div>
+      <div class="op-domains">
+        ${domains.map(dm => {
+          const rec = recurDomains.has(dm.trim());
+          return `<span class="domain-tag${rec?' recurrent':''}" ${rec?'title="Operador recurrente"':''}>${dm.trim()}${rec?' ★':''}</span>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('recGrid04').innerHTML = recurring.map(r =>
+    `<div class="rec-row">
+      <div class="rec-domain">${r.domain}</div>
+      <div><div class="rec-count">${r.ops}</div><div class="rec-label">ops.</div></div>
+      <div class="rec-ops">${r.narrativas||'—'}</div>
+    </div>`
+  ).join('');
+
+  const recNames = recurring.map(r=>`<span class="hl-r">${r.domain}</span>`).join(' y ');
+  document.getElementById('insight04').innerHTML =
+    `⚡ Se detectaron <span class="hl-r">${stats.total_ops||0} operaciones coordinadas</span> con ` +
+    `<span class="hl-a">${stats.total_media||0} medios operadores</span>` +
+    (recNames ? ` · ${recNames} aparecen en 2+ operaciones distintas` : '') + '.';
+}
+
+// ── IND.05 ───────────────────────────────
+function lpRenderInd05() {
+  if (!p2Data) return;
+  const rd     = p2Data.reach_daily || {};
+  const totals = rd.totals || {};
+  const peaks  = rd.peaks  || {};
+  const series = rd.series || [];
+
+  document.getElementById('i05-total').textContent      = lpFmtK(totals.total     || 0);
+  const from = document.getElementById('dateFrom').value;
+  const to   = document.getElementById('dateTo').value;
+  document.getElementById('i05-period').textContent     = `${from} – ${to} · ${totals.dias_total||0} días`;
+
+  const pctS = totals.pct_social    || (totals.total > 0 ? totals.social/totals.total*100    : 0);
+  const pctN = totals.pct_nonsocial || (totals.total > 0 ? totals.nonsocial/totals.total*100 : 0);
+
+  document.getElementById('i05-social').textContent          = lpFmtK(totals.social    || 0);
+  document.getElementById('i05-social-pct').textContent      = `${(+pctS).toFixed(1)}% del total`;
+  document.getElementById('i05-social-bar').style.width      = pctS + '%';
+  document.getElementById('i05-nonsocial').textContent       = lpFmtK(totals.nonsocial || 0);
+  document.getElementById('i05-nonsocial-pct').textContent   = `${(+pctN).toFixed(1)}% del total`;
+  document.getElementById('i05-nonsocial-bar').style.width   = pctN + '%';
+  document.getElementById('i05-stacked-s').style.width       = pctS + '%';
+  document.getElementById('i05-stacked-slabel').textContent  = `SOCIAL ${(+pctS).toFixed(1)}%`;
+  document.getElementById('i05-stacked-nlabel').textContent  = `NO SOCIAL ${(+pctN).toFixed(1)}%`;
+  document.getElementById('i05-pk-sval').textContent         = lpFmtK(peaks.social_val    || 0);
+  document.getElementById('i05-pk-sdate').textContent        = peaks.social_date    || '—';
+  document.getElementById('i05-pk-nval').textContent         = lpFmtK(peaks.nonsocial_val || 0);
+  document.getElementById('i05-pk-ndate').textContent        = peaks.nonsocial_date || '—';
+  document.getElementById('i05-dias').textContent            = totals.dias_activos  || '—';
+  document.getElementById('i05-dias-total').textContent      = `de ${totals.dias_total||'—'} totales`;
+
+  document.getElementById('insight05').innerHTML =
+    `⚡ <span class="hl-p">Social</span> ${(+pctS).toFixed(1)}% · ` +
+    `<span class="hl-a">No-Social</span> ${(+pctN).toFixed(1)}% · ` +
+    `Pico social: <span class="hl-y">${peaks.social_date||'—'}</span> ${lpFmtK(peaks.social_val||0)} · ` +
+    `Pico no-social: <span class="hl-y">${peaks.nonsocial_date||'—'}</span> ${lpFmtK(peaks.nonsocial_val||0)}`;
+
+  lpRenderSparkline(series);
+}
+
+function lpRenderSparkline(series) {
+  if (!series || series.length === 0) return;
+  const canvas = document.getElementById('spark05');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth || 400;
+  const H = 72;
+  canvas.width  = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const PAD  = { l:4, r:4, t:8, b:18 };
+  const cW   = W - PAD.l - PAD.r;
+  const cH   = H - PAD.t - PAD.b;
+  const soc  = series.map(d=>d.s);
+  const nonS = series.map(d=>d.n);
+  const maxV = Math.max(...soc, ...nonS) || 1;
+  const xStep = cW / Math.max(series.length - 1, 1);
+  const toX = i => PAD.l + i * xStep;
+  const toY = v => PAD.t + cH - (v / maxV) * cH;
+
+  ctx.strokeStyle='rgba(30,45,61,0.8)'; ctx.lineWidth=1;
+  [0.25,0.5,0.75,1].forEach(f => {
+    const y = PAD.t + cH - f*cH;
+    ctx.beginPath(); ctx.moveTo(PAD.l,y); ctx.lineTo(W-PAD.r,y); ctx.stroke();
+  });
+  // Area no-social
+  ctx.beginPath(); ctx.moveTo(toX(0),toY(nonS[0]));
+  nonS.forEach((v,i)=>ctx.lineTo(toX(i),toY(v)));
+  ctx.lineTo(toX(series.length-1),PAD.t+cH); ctx.lineTo(toX(0),PAD.t+cH); ctx.closePath();
+  ctx.fillStyle='rgba(0,212,255,0.12)'; ctx.fill();
+  // Area social
+  ctx.beginPath(); ctx.moveTo(toX(0),toY(soc[0]));
+  soc.forEach((v,i)=>ctx.lineTo(toX(i),toY(v)));
+  ctx.lineTo(toX(series.length-1),PAD.t+cH); ctx.lineTo(toX(0),PAD.t+cH); ctx.closePath();
+  ctx.fillStyle='rgba(176,96,255,0.14)'; ctx.fill();
+  // Línea no-social
+  ctx.beginPath(); ctx.moveTo(toX(0),toY(nonS[0]));
+  nonS.forEach((v,i)=>{ if(i>0) ctx.lineTo(toX(i),toY(v)); });
+  ctx.strokeStyle='#00d4ff'; ctx.lineWidth=1.5; ctx.stroke();
+  // Línea social
+  ctx.beginPath(); ctx.moveTo(toX(0),toY(soc[0]));
+  soc.forEach((v,i)=>{ if(i>0) ctx.lineTo(toX(i),toY(v)); });
+  ctx.strokeStyle='#b060ff'; ctx.lineWidth=1.5; ctx.stroke();
+  // Picos
+  const pkS=soc.indexOf(Math.max(...soc));
+  const pkN=nonS.indexOf(Math.max(...nonS));
+  ctx.beginPath(); ctx.arc(toX(pkS),toY(soc[pkS]),3,0,Math.PI*2); ctx.fillStyle='#b060ff'; ctx.fill();
+  ctx.beginPath(); ctx.arc(toX(pkN),toY(nonS[pkN]),3,0,Math.PI*2); ctx.fillStyle='#00d4ff'; ctx.fill();
+  // Labels X
+  const every = Math.ceil(series.length/5);
+  ctx.fillStyle='#2a4a5e'; ctx.textAlign='center';
+  ctx.font=`7px JetBrains Mono, monospace`;
+  series.forEach((d,i) => { if(i%every===0||i===series.length-1) ctx.fillText(d.d, toX(i), H-3); });
+}
+
+// ── Modal ─────────────────────────────────
+function lpOpenModal01() {
+  lpModalDataset = lpInfData;
+  document.getElementById('lpModalTitle').textContent = 'TODOS LOS INFLUENCERS — FUENTES AMPLIFICADORAS';
+  document.getElementById('lpModalTitle').style.color = 'var(--accent)';
+  lpModalSortKey='reach'; lpModalSortDir=-1; lpModalPlatFilter='all';
+  document.querySelectorAll('#p2ModalOverlay .lp-plat-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('#p2ModalOverlay .lp-plat-btn.all')?.classList.add('active');
+  document.querySelector('#p2ModalOverlay .lp-modal-plat-filter').style.display='';
+  document.getElementById('p2ModalOverlay').classList.add('open');
+  lpRenderModal();
+}
+function lpOpenModal02(group) {
+  lpModalDataset = group.rows;
+  document.getElementById('lpModalTitle').textContent = `${group.icon} ${group.label.toUpperCase()} — PERFILES`;
+  document.getElementById('lpModalTitle').style.color = group.color;
+  lpModalSortKey='reach'; lpModalSortDir=-1; lpModalPlatFilter='all';
+  document.querySelector('#p2ModalOverlay .lp-modal-plat-filter').style.display='none';
+  document.getElementById('p2ModalOverlay').classList.add('open');
+  lpRenderModal();
+}
+function lpCloseModal() {
+  document.getElementById('p2ModalOverlay').classList.remove('open');
+  document.querySelector('#p2ModalOverlay .lp-modal-plat-filter').style.display='';
+}
+function lpModalSort(key, btn) {
+  if (lpModalSortKey===key) lpModalSortDir*=-1;
+  else { lpModalSortKey=key; lpModalSortDir=-1; }
+  document.querySelectorAll('#p2ModalOverlay .lp-modal-sort-btn').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  lpRenderModal();
+}
+function lpFilterPlat(plat, btn) {
+  lpModalPlatFilter = plat;
+  document.querySelectorAll('#p2ModalOverlay .lp-plat-btn').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (!lpModalDataset) lpModalDataset = lpInfData;
+  lpRenderModal();
+}
+function lpRenderModal() {
+  let rows = lpModalDataset ? [...lpModalDataset] : [...lpInfData];
+  if (lpModalPlatFilter !== 'all') rows = rows.filter(r=>r.domain===lpModalPlatFilter);
+  rows.sort((a,b) => {
+    if (lpModalSortKey==='name') return a.name.localeCompare(b.name) * lpModalSortDir;
+    if (lpModalSortKey==='plat') return a.domain.localeCompare(b.domain) * lpModalSortDir;
+    return ((a[lpModalSortKey]||0) - (b[lpModalSortKey]||0)) * lpModalSortDir;
+  });
+  const totalR = rows.reduce((s,r)=>s+r.reach, 0);
+  const avgR   = rows.length ? totalR/rows.length : 0;
+  const avgEff = rows.length ? rows.reduce((s,r)=>s+r.eff,0)/rows.length : 0;
+  document.getElementById('lpModalSubtitle').textContent = `${rows.length} perfiles · reach total ${lpFmtK(totalR)}`;
+  document.getElementById('lpModalTotalReach').textContent = lpFmtK(totalR);
+  document.getElementById('lpModalCount').textContent      = rows.length;
+  document.getElementById('lpModalAvgReach').textContent   = lpFmtK(Math.round(avgR));
+  document.getElementById('lpModalAvgEff').textContent     = avgEff.toFixed(2)+'x';
+  document.getElementById('lpModalTbody').innerHTML = rows.map((r,i) => {
+    const effCls = r.eff>=2?'lp-eff-high':r.eff>=0.5?'lp-eff-mid':'lp-eff-low';
+    return `<tr>
+      <td class="col-mob-hide" style="color:var(--text-faint);width:32px;text-align:center">${i+1}</td>
+      <td style="color:var(--text-main);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.name}">${r.name}</td>
+      <td>${lpPlatChip(r.domain)}</td>
+      <td style="color:var(--accent);text-align:right">${lpFmtK(r.reach)}</td>
+      <td style="color:var(--text-dim);text-align:right">${lpFmtK(r.followers)}</td>
+      <td style="text-align:right"><span class="${effCls}" style="font-family:var(--font-mono);font-size:10px;font-weight:bold">${r.eff.toFixed(1)}x</span></td>
+      <td class="col-mob-hide" style="color:var(--text-dim);text-align:right">${r.sov.toFixed(2)}%</td>
+      <td class="col-mob-hide" style="color:var(--text-dim);text-align:center">${r.mentions}</td>
+    </tr>`;
+  }).join('');
+}
 </script>
 </body>
 </html>
